@@ -1,5 +1,5 @@
 class ScholarshipsController < ApplicationController
-  before_action :set_scholarship, only: %i[ show update destroy ]
+  before_action :set_scholarship, only: %i[show update destroy]
 
   # GET /scholarships
   def index
@@ -11,7 +11,9 @@ class ScholarshipsController < ApplicationController
     @scholarships = @scholarships.where(major: params[:major]) if params[:major]
     @scholarships = @scholarships.where(country: params[:country]) if params[:country]
 
-    render json: @scholarships
+    @scholarships = @scholarships.page(params[:page])
+
+    render json: { scholarships: @scholarships, meta: pagination_meta(@scholarships) }, each_serializer: ScholarshipSerializer
   end
 
   # GET /scholarships/1
@@ -46,12 +48,14 @@ class ScholarshipsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_scholarship
-    @scholarship = Scholarship.find(params[:id])  # Use require here
+    @scholarship = Scholarship.find_by(id: params[:id])  # Use find_by instead of find
+
+    unless @scholarship
+      render json: { error: "Scholarship not found with id=#{params[:id]}" }, status: :not_found
+    end
   end
 
-  # Only allow a list of trusted parameters through.
   def scholarship_params
     params.require(:scholarship).permit(
       :title,
@@ -66,5 +70,16 @@ class ScholarshipsController < ApplicationController
       description: {},
       eligibility_criteria: {},
     )
+  end
+
+  # Pagination meta data
+  def pagination_meta(scholarships)
+    {
+      total_count: scholarships.total_count,
+      total_pages: scholarships.total_pages,
+      next_page: scholarships.next_page,
+      current_page: scholarships.current_page,
+      per_page: scholarships.limit_value,
+    }
   end
 end

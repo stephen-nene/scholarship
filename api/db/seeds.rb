@@ -10,8 +10,12 @@ puts "✨ Seeding scholarships..."
   Scholarship.create!(
     title: Faker::Educator.course_name,
     description: {
-      summary: Faker::Hipster.sentence,
-      details: Array.new(rand(3..4)) { Faker::GreekPhilosophers.quote },  # Random number of quotes (3-4)
+      summary: Faker::GreekPhilosophers.quote,
+      details: Array.new(rand(3..4)) {
+        [Faker::Quote.matz,
+         Faker::Quote.unique.most_interesting_man_in_the_world,
+         Faker::Quote.jack_handey].sample
+      },
       requirements: Faker::Hacker.say_something_smart,
       degree_name: Faker::Educator.degree,
     },
@@ -32,13 +36,12 @@ puts "✨ Seeding scholarships..."
     level: Scholarship.levels.keys.sample,
     major: Scholarship.majors.keys.sample,
   )
+
+  Faker::Quote.unique.clear
 end
 
 puts "🎉 Seeding complete! #{Scholarship.count} scholarships have been added."
 puts "\n"
-
-
-
 
 # Faker::Quote.famous_last_words #=> "My vocabulary did this to me. Your love will let you go on…"
 
