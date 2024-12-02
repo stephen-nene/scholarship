@@ -5,7 +5,7 @@ CREATE TABLE "scholarships"(
     "eligibility_criteria" TEXT NOT NULL,
     "funding_amount" FLOAT(53) NOT NULL,
     "deadline" TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-    "status" VARCHAR(255) CHECK
+    "status" INTEGER CHECK
         (
             "status" IN(
                 'active',
@@ -17,6 +17,7 @@ CREATE TABLE "scholarships"(
         "contact_email" TEXT NOT NULL,
         "application_link" TEXT NOT NULL,
         "country" TEXT NOT NULL
+        "major" INTEGER NOT NULL 
 );
 ALTER TABLE
     "scholarships" ADD PRIMARY KEY("id");
