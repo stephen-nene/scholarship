@@ -46,30 +46,141 @@ Here’s an **exaggerated schema** for a scholarship website database table that
 | `selection_criteria`          | Selection process or criteria (e.g., interviews, essay submission, portfolio review).                 |
 | `scholarship_restrictions`    | Any restrictions on who can apply (e.g., only residents of a specific country).                       |
 
-### **Explanation of Columns**
-
-- **Basic Scholarship Info**: Columns like `scholarship_name`, `scholarship_code`, and `description` describe the scholarship and give basic details.
-  
-- **Dates and Deadlines**: The `application_deadline`, `start_date`, and `end_date` columns help track important dates related to the scholarship.
-
-- **Eligibility and Requirements**: The `eligibility_requirements`, `academic_requirements`, and `required_documents` columns help filter who can apply for the scholarship.
-
-- **Target Audience**: The `target_audience` column lets the scholarship specify groups that are encouraged to apply.
-
-- **Financials and Awards**: `award_amount`, `currency`, `number_of_awards`, and `scholarship_type` help define how the scholarship is awarded.
-
-- **Institution and Region**: Columns like `country_of_origin`, `region`, `institution_name`, and `institution_type` provide information about where the scholarship is available.
-
-- **User Interaction**: The `created_by_user_id` and `updated_by_user_id` columns are foreign keys that link to users, helping track who added or modified a scholarship.
-
-- **Application Process and Selection**: The `user_applications_count`, `application_url`, `selection_criteria`, and `terms_and_conditions` track how the scholarship is being applied to and how the selection is handled.
-
-- **Admin and Status Info**: `scholarship_status`, `created_at`, `updated_at` are useful for maintaining the state of the scholarship and tracking when it was created or updated.
-
-### **Schema Usage**
-
-This table can be used to store a wealth of information about scholarships available to African students, and by using the various columns, admins can add and manage scholarship opportunities effectively. You can also join it with a `users` table to keep track of who applied, who created scholarships, and who updated the information.
+Kanban cards can be designed and structured in various ways, depending on your workflow and how you want to break down tasks. Since you're building a scholarship website, I’ll guide you through three approaches to designing your cards: **(1) by functional areas, (2) by frontend/backend split, and (3) component-based.** I'll also provide a detailed way to flesh out cards for each stage from start to finish.
 
 ---
 
-Let me know if you'd like to generate the Django models for this table or need more help with the database design!
+## **1. Functional Area-Based Cards**  
+This approach divides tasks based on features or functionalities of your website. Each card represents a feature or functionality.
+
+### **Example Kanban Columns (Functional Area-Based)**  
+- **To Be Done**: Tasks waiting to be picked up.  
+- **Design**: Planning and prototyping phase.  
+- **Development**: Active coding phase.  
+- **Testing**: QA or user testing phase.  
+- **Completed**: Fully finished tasks.
+
+### **Card Examples**  
+#### **Card: Scholarship Application Form**
+- **Title**: Build Scholarship Application Form  
+- **Description**: Create a form for users to fill out their scholarship applications.  
+- **Checklist**:  
+  - Design form layout in Figma.  
+  - Develop form fields (name, email, essay, etc.).  
+  - Validate inputs (e.g., required fields, file uploads).  
+  - Integrate backend API to save form data.  
+  - Add tests for validation.  
+- **Labels**: Frontend, Backend, High Priority.  
+- **Deadline**: Dec 15, 2024.  
+
+#### **Card: Notification System**  
+- **Title**: Build Deadline Notification System  
+- **Description**: Notify users via email before scholarship deadlines.  
+- **Checklist**:  
+  - Design email templates.  
+  - Write backend service for scheduling notifications.  
+  - Test emails for formatting.  
+  - Deploy and test in production.  
+- **Labels**: Backend, Medium Priority.  
+
+---
+
+## **2. Frontend/Backend Split**  
+This approach divides tasks based on whether they pertain to the **frontend** (React) or **backend** (Rails).  
+
+### **Example Kanban Columns (Frontend/Backend Split)**  
+- **To Be Done**  
+- **Frontend**: Tasks for React components, UI, and client-side logic.  
+- **Backend**: Tasks for APIs, database models, and server-side logic.  
+- **Integration**: Tasks where frontend and backend meet.  
+- **Completed**  
+
+### **Card Examples**  
+#### **Frontend Card: Scholarship Listing Page**  
+- **Title**: Build Scholarship Listing Page  
+- **Description**: Display a list of available scholarships with pagination and search functionality.  
+- **Checklist**:  
+  - Create React component for scholarship cards.  
+  - Add a search bar and filters.  
+  - Style the page with CSS/Material UI.  
+  - Test responsiveness on mobile and desktop.  
+- **Labels**: Frontend, Medium Priority.  
+- **Deadline**: Dec 20, 2024.  
+
+#### **Backend Card: Scholarship Data API**  
+- **Title**: Build API for Scholarship Data  
+- **Description**: Create an API endpoint to fetch scholarship data with filters and pagination.  
+- **Checklist**:  
+  - Define database schema for scholarships.  
+  - Write API endpoint (`/api/scholarships`).  
+  - Add query parameters for filtering (e.g., category, location).  
+  - Write RSpec tests for API.  
+- **Labels**: Backend, High Priority.  
+- **Deadline**: Dec 18, 2024.  
+
+---
+
+## **3. Component-Based Cards**  
+This approach breaks tasks into React components, backend models, or specific features.  
+
+### **Example Kanban Columns (Component-Based)**  
+- **Planning**: Define the scope of each component.  
+- **Development**: Code individual components or features.  
+- **Integration**: Combine components and test functionality.  
+- **Testing**: Ensure everything works as intended.  
+- **Completed**  
+
+### **Card Examples**  
+#### **Component: Scholarship Card Component**  
+- **Title**: Build Scholarship Card Component  
+- **Description**: A reusable card component for displaying scholarship details.  
+- **Checklist**:  
+  - Design the card layout (title, deadline, description).  
+  - Add a button for "Apply Now."  
+  - Style the card using CSS/Material UI.  
+  - Test the card with dummy data.  
+- **Labels**: Frontend, Low Priority.  
+- **Deadline**: Dec 10, 2024.  
+
+#### **Component: User Authentication API**  
+- **Title**: Build User Authentication API  
+- **Description**: Allow users to sign up, log in, and manage their accounts.  
+- **Checklist**:  
+  - Set up Devise in Rails.  
+  - Add JWT token support for API authentication.  
+  - Create endpoints for login/logout.  
+  - Write tests for authentication flow.  
+- **Labels**: Backend, High Priority.  
+
+---
+
+## **Comparison of Approaches**
+| **Approach**             | **When to Use**                                             | **Pros**                                            | **Cons**                                               |
+|---------------------------|-----------------------------------------------------------|----------------------------------------------------|-------------------------------------------------------|
+| **Functional Area-Based** | When you think in terms of features or deliverables.       | Keeps tasks focused on user outcomes.              | Tasks may span both frontend and backend.             |
+| **Frontend/Backend Split**| When you have distinct teams or are more code-focused.     | Clear separation of concerns for developers.       | Can cause disconnect between frontend and backend.    |
+| **Component-Based**       | When building a modular, reusable architecture.            | Encourages modular and testable code.              | May lose sight of the big picture (features).         |
+
+---
+
+## **Recommendation for You**
+- Start with **Functional Area-Based** cards for broader features.  
+- As you work on each feature, create **Frontend/Backend** or **Component-Based** cards to break them into smaller tasks.  
+
+For example:  
+1. Create a card for **Scholarship Application Workflow** under functional areas.  
+2. Break it into smaller **Frontend** and **Backend** tasks (e.g., "Build Application Form UI," "Write API for Submitting Applications").  
+3. Inside the smaller tasks, add **component-based subtasks** (e.g., "Design Submit Button Component").
+
+Let me know if you need help setting this up in GitHub or further refining your workflow!
+
+
+# rogress
+- initialised the backend
+- started designing the tables
+- Having a structure
+- Getting some ideas on how the frontend will look like (blockers)
+
+# Blockers
+- Frontend look and feel
+- what a scholarshi entails
