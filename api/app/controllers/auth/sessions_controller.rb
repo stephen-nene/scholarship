@@ -6,7 +6,6 @@ module Auth
     def register
       user = User.new(user_params)
       if user.save
-        # user.update(reset_token: SecureRandom.base58(24), reset_expiry: 1.day.from_now)
         user.generate_token(1.day.from_now)
         UserMailer.welcome_email(user).deliver_now
         render json: { message: "User registered successfully. Please check your email to activate your account." }, status: :created
@@ -17,13 +16,21 @@ module Auth
 
     # PATCH /auth/activate/:token
     def activate
-      user = User.find_by(reset_token: params[:token])
+      if params[:token].blank?
+        render json: { error: "Activation token is missing." }, status: :unprocessable_entity
+        return
+      end
 
-      if user && user.reset_expiry > Time.now
-        user.update(status: :active, reset_token: nil, reset_expiry: nil)
-        render json: { message: "Account activated successfully!" }, status: :ok
+      user = User.find_by(token: params[:token])
+      puts "Token here #{user.token_expiry}"
+
+      if user.nil?
+        render json: { error: "Invalid activation token." }, status: :unprocessable_entity
+      elsif user.token_expiry <= Time.now
+        render json: { error: "Activation token has expired." }, status: :unprocessable_entity
       else
-        render json: { error: "Invalid or expired activation token." }, status: :unprocessable_entity
+        user.update(status: :active, token: nil, token_expiry: nil)
+        render json: { message: "Account activated successfully!" }, status: :ok
       end
     end
 

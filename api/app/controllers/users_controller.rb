@@ -2,11 +2,15 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users
-  def index
-    @users = User.all.page(params[:page])
+def index
+  @users = User.all.page(params[:page])
 
-    render json: { users: @users, meta: pagination_meta(@users) }, each_serializer: UserSerializer
-  end
+  render json: { 
+    users2: @users.map {|user| UserSerializer.new(user)},
+    meta: pagination_meta(@users) 
+  }
+end
+
 
   # GET /users/1
   def show
@@ -42,11 +46,12 @@ class UsersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find_by(params.expect(:id))
-    unless @user
-      render json: @user.errors, status: :not_found
+    @user = User.find_by(id: params[:id])
+    if @user.nil?
+      render json: { error: "User not found with id=#{params[:id]}" }, status: :not_found
     end
   end
+  
 
   # Only allow a list of trusted parameters through.
   def user_params

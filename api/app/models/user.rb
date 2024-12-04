@@ -2,7 +2,6 @@ class User < ApplicationRecord
   enum :role, { user: 0, provider: 1, admin: 2 }
   enum :status, { pending: 0, active: 1, suspended: 2 }
 
-  # has_secure_token :reset_token
   has_secure_password
 
   # Associations
@@ -16,20 +15,19 @@ class User < ApplicationRecord
   before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
 
   # creates a new reset token
   def generate_token(expiry_time = 10.minutes.from_now)
-    self.reset_token = SecureRandom.base58(24)
-    self.reset_expiry = expiry_time
+    # has_secure_token
+    self.token = SecureRandom.base58(24)
+    self.token_expiry = expiry_time
     save!
   end
-  
 
   # deletes a used reset token
-  def clear_reset_token
-    self.reset_token = nil
-    self.reset_expiry = nil
+  def clear_token
+    self.token = nil
+    self.token_expiry = nil
     save!
   end
 end

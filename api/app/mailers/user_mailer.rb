@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
   def welcome_email(user)
     @user = user
-    @activation_token = user.reset_token
+    @activation_token = user.token
     @activation_url = "https://ne-auth.vercel.app/activate/#{@activation_token}"
     mail(to: @user.email, subject: "Welcome to Authh")
   end

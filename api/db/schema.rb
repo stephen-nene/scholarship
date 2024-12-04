@@ -69,11 +69,11 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_083144) do
     t.integer "role", default: 0
     t.string "profile_pic", default: "https://placehold.co/600x400"
     t.integer "status", default: 0
-    t.string "reset_token"
-    t.time "reset_expiry"
+    t.string "token"
+    t.datetime "token_expiry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["reset_token"], name: "index_users_on_reset_token", unique: true
+    t.index ["email", "username", "token"], name: "index_users_on_email_and_username_and_token", unique: true
     t.index ["role"], name: "index_users_on_role"
     t.index ["status"], name: "index_users_on_status"
   end
