@@ -52,8 +52,10 @@ module Auth
     def forgot_password
       user = User.find_by(email: params[:email])
       if user
-        # user.generate_reset_token
-        # Send reset token via email (setup mailer)
+        user.generate_token()
+
+        # Send the password reset email with the link containing the token
+        UserMailer.reset_password_email(user).deliver_now
         render json: { message: "Reset instructions sent to your email" }, status: :ok
       else
         render json: { error: "Email not found" }, status: :not_found
@@ -62,10 +64,10 @@ module Auth
 
     # PUT /auth/reset_password
     def reset_password
-      user = User.find_by(reset_token: params[:token])
-      if user && user.reset_expiry > Time.now
+      user = User.find_by(token: params[:token])
+      if user && user.token_expiry > Time.now
         if user.update(password: params[:password])
-          user.clear_reset_token
+          user.clear_token
           render json: { message: "Password reset successfully" }, status: :ok
         else
           render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
