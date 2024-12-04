@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { FcMenu } from "react-icons/fc";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaBars, FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { Button, Flex } from "antd";
+import { VscChromeClose } from "react-icons/vsc";
 
 import "../assets/styles/navbar.css";
 
-export const Navbar = () => {
+export const Navbar = ({ darkMode,setDarkMode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Toggle the mobile menu
@@ -36,23 +38,29 @@ export const Navbar = () => {
               <NavLink to="/contact" className="nav-link">
                 Contact
               </NavLink>
-              <a href="#" className="btn btn-signup">
-                Sign Up
-              </a>
+
               <a href="#" className="btn btn-login">
                 Login
               </a>
             </div>
+            <div className="flex gap-4">
+              <Flex className="items-center" gap="small">
+                {darkMode ? (
+                  <FaSun onClick={()=>setDarkMode(!darkMode)}  className="hover:text-yellow-600" size={24} />
+                ) : (
+                  <FaMoon onClick={()=>setDarkMode(!darkMode)} className="hover:text-blue-900" size={24} />
+                )}
+              </Flex>
+              <div className="md:hidden cursor-pointer">
+                {isMenuOpen ? (
+                  <VscChromeClose onClick={toggleMenu} size={25} />
+                ) : (
+                  <FaBars onClick={toggleMenu} size={25} />
+                )}
+              </div>
+            </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center">
-              <button
-                className="text-gray-800 focus:outline-none"
-                onClick={toggleMenu} // Toggle the menu on click
-              >
-                <FcMenu size={30} />
-              </button>
-            </div>
           </div>
         </nav>
         {/* Mobile Menu (Conditionally rendered) */}

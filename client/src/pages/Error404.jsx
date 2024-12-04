@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export const NotFound = ({ darkMode = !true }) => {
+export const NotFound = ({ darkMode }) => {
   const navigate = useNavigate();
 
   const darkModeStyles = {
     background: "bg-black bg-opacity-50",
-    container: "bg-gray-800 text-white border-blue-600",
+    container: "bg-gray-800 text-white border-gray-800",
     heading: "text-blue-500",
     text: "text-gray-300",
     subText: "text-gray-600",
@@ -25,15 +25,22 @@ export const NotFound = ({ darkMode = !true }) => {
   const styles = darkMode ? darkModeStyles : lightModeStyles;
 
   return (
-    <div className={`fixed inset-0 flex items-center justify-center ${styles.background}`}>
-      <div className={`p-10 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container}`}>
+    <div
+      className={`fixed inset-0 flex items-center justify-center ${styles.background}`}
+    >
+      <div
+        className={`p-10 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container}`}
+      >
         <div className="mb-6">
-          <h1 className={`text-6xl font-bold ${styles.heading} mb-4`}>404</h1>
-          <p className={`${styles.text}`}>
-            The page you seek has vanished into the digital abyss.
-          </p>
-          <p className={`${styles.subText} my-4`}>
+          <h1 className={`text-6xl font-bold ${styles.heading} mb-4`}>
+            {/* <span className="text-red-500 uppercase">Error</span> 404 */}
+            404
+          </h1>
+          <p className={`${styles.text} my-4`}>
             Oops! The page you're looking for doesn't exist.
+          </p>
+          <p className={`${styles.subText}`}>
+            The page you seek has vanished into the digital abyss.
           </p>
         </div>
         <button
