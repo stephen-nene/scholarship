@@ -43,7 +43,10 @@ module Auth
       elsif !user.authenticate(params[:password])
         render json: { error: "Wrong password" }, status: :unauthorized
       else
-        session[:user_id] = user.id
+        if params[:remember_me]
+          session[:user_id] = user.id
+        end
+
         render json: { user: UserSerializer.new(user), message: "Login successful" }, status: :ok
       end
     end

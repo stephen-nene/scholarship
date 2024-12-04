@@ -32,13 +32,19 @@ module Scholarships
     #
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
-    #
+    # Add middleware for cookies and session management
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "auth-session", same_site: :lax, secure: Rails.env.production?
 
     config.action_dispatch.cookies_same_site_protection = :None
 
     config.middleware.insert_before 0, Rack::Cors
+
+    # Enable secure cookies on production
+    if Rails.env.production?
+      config.force_ssl = true
+    end
+
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
