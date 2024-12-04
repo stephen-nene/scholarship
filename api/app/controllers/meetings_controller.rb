@@ -13,7 +13,7 @@ class MeetingsController < ApplicationController
     render json: @meeting, include_associations: true
   end
 
-  # POST /meetings
+  # POST /meetings36
   def create
     @meeting = Meeting.new(meeting_params)
 

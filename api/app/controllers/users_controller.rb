@@ -6,7 +6,7 @@ def index
   @users = User.all.page(params[:page])
 
   render json: { 
-    users2: @users.map {|user| UserSerializer.new(user)},
+    users: @users.map {|user| UserSerializer.new(user)},
     meta: pagination_meta(@users) 
   }
 end
@@ -14,7 +14,7 @@ end
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user, include_associations: true
   end
 
   # POST /users
@@ -46,7 +46,7 @@ end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find_by(id: params[:id])
+    @user = User.includes(:meetings).find_by(id: params[:id])
     if @user.nil?
       render json: { error: "User not found with id=#{params[:id]}" }, status: :not_found
     end
