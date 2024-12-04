@@ -19,11 +19,12 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
 
   # creates a new reset token
-  def generate_reset_token
+  def generate_token(expiry_time = 10.minutes.from_now)
     self.reset_token = SecureRandom.base58(24)
-    self.reset_expiry = 10.minutes.from_now
+    self.reset_expiry = expiry_time
     save!
   end
+  
 
   # deletes a used reset token
   def clear_reset_token

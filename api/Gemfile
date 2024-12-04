@@ -4,11 +4,10 @@ source "https://rubygems.org"
 gem "rails", "~> 8.0.0"
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", ">= 2.1"
-gem 'pg'
-gem 'active_model_serializers', '~> 0.10.2'
-gem 'faker'
-gem 'kaminari'
-
+gem "pg"
+gem "active_model_serializers", "~> 0.10.2"
+gem "faker"
+gem "kaminari"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -41,8 +40,7 @@ gem "thruster", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 
-
-
+gem "dotenv-rails", groups: [:development, :test]
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -53,5 +51,3 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
-
-

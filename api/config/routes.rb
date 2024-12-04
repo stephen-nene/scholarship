@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  namespace :auth do
+    post "login", to: "sessions#login"
+    post "register", to: "sessions#register"
+    patch "activate/:token", to: "sessions#activate"
+    post "forgot_password", to: "sessions#forgot_password"
+    put "reset_password", to: "sessions#reset_password"
+    get "me", to: "sessions#me"
+    delete "logout", to: "sessions#logout"
+  end
+
   resources :meetings
   resources :users
   resources :scholarships
