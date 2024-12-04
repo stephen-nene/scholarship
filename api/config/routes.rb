@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :meetings
+  resources :users
   resources :scholarships
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

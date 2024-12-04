@@ -3,8 +3,53 @@ require "faker"
 
 puts "🌱 Clearing existing scholarships..."
 Scholarship.destroy_all  # Destroy all previous records
+puts "🌱 Clearing existing meetings and participants..."
+Meeting.destroy_all
+MeetingParticipant.destroy_all
+puts "🌱 Clearing existing users..."
+User.destroy_all
 
-puts "✨ Seeding scholarships..."
+puts "\n"
+
+
+
+# Helper to create users
+def create_users(role, count, start_index = 1)
+  count.times do |i|
+    User.create!(
+      first_name: Faker::Name.first_name,
+      last_name: Faker::Name.last_name,
+      username: Faker::Internet.username,
+      phonenumber: Faker::PhoneNumber.cell_phone,
+      email: "#{role}#{start_index + i}@test.com",
+      password: "assword", 
+      addresses: [
+        {
+          street: Faker::Address.street_address,
+          city: Faker::Address.city,
+          state: Faker::Address.state,
+          country: Faker::Address.country
+        }
+      ],
+      role: role,
+      status: User.statuses.keys.sample # Default status
+    )
+  end
+end
+
+puts "✨ Seeding admins... 👤"
+create_users(:admin, 5)
+puts "✨ Seeding providers... 👤"
+create_users(:provider, 10)
+puts "✨ Seeding normal users... 👤"
+create_users(:user, 20)
+
+puts "🎉 Seeding complete! #{User.count} users have been added: #{5} admins, #{10} providers, and #{20} users."
+
+puts "\n"
+
+
+puts "✨ Seeding scholarships... 🎓"
 
 30.times do
   Scholarship.create!(
@@ -42,6 +87,35 @@ end
 
 puts "🎉 Seeding complete! #{Scholarship.count} scholarships have been added."
 puts "\n"
+
+puts "✨ Seeding meetings... 🧑🏿‍🤝‍🧑🏽"
+
+30.times do
+  admin = User.where(role: :admin).sample
+  scholarship = Scholarship.all.sample
+
+  meeting = Meeting.create!(
+    admin: admin, 
+    scholarship: scholarship,
+    title: Faker::Quote.robin,
+    description: Faker::Quote.jack_handey,
+    status: Meeting.statuses.keys.sample, 
+    date: Faker::Time.forward(days: 30), 
+    meet_type: Meeting.meet_types.keys.sample,  
+    meeting_link: Faker::Internet.url, 
+  )
+
+  if meeting.meet_type == "group_meeting"
+    participants = User.where.not(role: :admin).sample(6)
+    participants.each do |user|
+      MeetingParticipant.create!(meeting: meeting, user: user)
+    end
+  end
+end
+
+puts "🎉 Seeding complete! #{Meeting.count} meetings and #{MeetingParticipant.count} participants have been added."
+puts "\n"
+
 
 # Faker::Quote.famous_last_words #=> "My vocabulary did this to me. Your love will let you go on…"
 

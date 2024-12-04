@@ -49,11 +49,7 @@ class ScholarshipsController < ApplicationController
   private
 
   def set_scholarship
-    @scholarship = Scholarship.find_by(id: params[:id])  # Use find_by instead of find
-
-    unless @scholarship
-      render json: { error: "Scholarship not found with id=#{params[:id]}" }, status: :not_found
-    end
+    @scholarship = Scholarship.find_by(id: params[:id]) 
   end
 
   def scholarship_params
