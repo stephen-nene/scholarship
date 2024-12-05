@@ -68,7 +68,7 @@ export const Navbar = () => {
                   </Link>
                 )}
                 {userData && userData.role === "admin" && (
-                  <Link to="/login" className="btn btn-login">
+                  <Link to="/dash" className="btn btn-login">
                     Dashboard
                   </Link>
                 )}
@@ -82,13 +82,13 @@ export const Navbar = () => {
                     <NavLink to="/dash" className="nav-link">
                       DashHome
                     </NavLink>
-                    <NavLink to="/services" className="nav-link">
+                    <NavLink to="/dash/scholarships" className="nav-link">
                       Scholarships
                     </NavLink>
-                    <NavLink to="/about" className="nav-link">
+                    <NavLink to="/dash/users" className="nav-link">
                       Users
                     </NavLink>
-                    <Link to="/login" className="nav-link">
+                    <Link to="/dash/meetings" className="nav-link">
                       Meetings
                     </Link>
                   </>

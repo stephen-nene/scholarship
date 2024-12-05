@@ -46,7 +46,9 @@ function App() {
   return (
     <>
       <Navbar darkMode={darkMode} />
-      <div className="h-screen  pt-[63px] md:pt-[60px] ">
+      <div className="h-screen   ">
+        <div className="min-h-screen  pt-[63px] md:mt-[10px] ">
+
         <Routes>
           <Route index element={<Home />} />
           <Route
@@ -79,8 +81,9 @@ function App() {
 
           <Route path="*" element={<Error404 darkMode={darkMode} />} />
         </Routes>
-      </div>
+        </div>
       <Footer darkMode={darkMode} />
+      </div>
     </>
   );
 }
