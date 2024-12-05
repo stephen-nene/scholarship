@@ -1,31 +1,33 @@
 import React, { useState } from "react";
-import { FcMenu } from "react-icons/fc";
 import { FaBars, FaMoon, FaSun } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
-import { Button, Flex } from "antd";
 import { VscChromeClose } from "react-icons/vsc";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setDarkMode } from "../store/actions/appAction";
 import "../assets/styles/navbar.css";
 
-export const Navbar = ({ darkMode,setDarkMode }) => {
+export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const darkMode = useSelector((state) => state.app.darkMode);
 
-  // Toggle the mobile menu
+  const dispatch = useDispatch();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <>
-      <header className="bg-white fixed top-0 w-full shadow-md z-10">
-        <nav className="container mx-auto px-6 py-3">
-          <div className="flex justify-between items-center">
-            <NavLink className="text-2xl font-bold text-gray-800" to="/">
+    <div className={` ${darkMode ? "dark" : ""}`}>
+      <header className="navbar">
+        <nav className="container">
+          <div className="navbar-wrapper">
+            {/* Logo */}
+            <NavLink className="text-2xl font-bold" to="/">
               Logo
             </NavLink>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center gap-4">
               <NavLink to="/" className="nav-link">
                 Home
               </NavLink>
@@ -36,21 +38,30 @@ export const Navbar = ({ darkMode,setDarkMode }) => {
                 Services
               </NavLink>
               <NavLink to="/contact" className="nav-link">
-                Contact
+                Profile
               </NavLink>
-
-              <a href="#" className="btn btn-login">
+              <Link to="/login" className="btn btn-login">
                 Login
-              </a>
+              </Link>
             </div>
-            <div className="flex gap-4">
-              <Flex className="items-center" gap="small">
-                {darkMode ? (
-                  <FaSun onClick={()=>setDarkMode(!darkMode)}  className="hover:text-yellow-600" size={24} />
-                ) : (
-                  <FaMoon onClick={()=>setDarkMode(!darkMode)} className="hover:text-blue-900" size={24} />
-                )}
-              </Flex>
+
+            {/* Right Icons */}
+            <div className="flex items-center gap-4">
+              {darkMode ? (
+                <FaSun
+                  onClick={() => dispatch(setDarkMode(!darkMode))}
+                  className="icon text-yellow-400"
+                  size={24}
+                />
+              ) : (
+                <FaMoon
+                  onClick={() => dispatch(setDarkMode(!darkMode))}
+                  className="icon text-gray-600"
+                  size={24}
+                />
+              )}
+
+              {/* Mobile Menu Toggle */}
               <div className="md:hidden cursor-pointer">
                 {isMenuOpen ? (
                   <VscChromeClose onClick={toggleMenu} size={25} />
@@ -59,13 +70,12 @@ export const Navbar = ({ darkMode,setDarkMode }) => {
                 )}
               </div>
             </div>
-
-            {/* Mobile Menu Button */}
           </div>
         </nav>
-        {/* Mobile Menu (Conditionally rendered) */}
+
+        {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="mobile-menu">
+          <div className="md:hidden mobile-menu">
             <NavLink to="/" className="nav-link" onClick={toggleMenu}>
               Home
             </NavLink>
@@ -76,17 +86,18 @@ export const Navbar = ({ darkMode,setDarkMode }) => {
               Services
             </NavLink>
             <NavLink to="/contact" className="nav-link" onClick={toggleMenu}>
-              Contact
+              Profile
             </NavLink>
-            <a href="#" className="btn btn-signup" onClick={toggleMenu}>
-              Sign Up
-            </a>
-            <a href="#" className="btn btn-login" onClick={toggleMenu}>
+            <Link
+              to="/login"
+              className="btn btn-login"
+              onClick={toggleMenu}
+            >
               Login
-            </a>
+            </Link>
           </div>
         )}
       </header>
-    </>
+    </div>
   );
 };

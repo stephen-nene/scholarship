@@ -9,6 +9,7 @@ import {
   Col,
   Select,
 } from "antd";
+import { Link } from "react-router-dom";
 
 export const Register = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
@@ -46,7 +47,7 @@ export const Register = ({ darkMode = false }) => {
         ? "bg-gray-800 border-gray-700 text-white"
         : "bg-white border-gray-300 text-gray-800"
     }`,
-    input: darkMode ? "bg-gray-700 border-gray-600 " : "bg-white",
+    input: darkMode ? "bg-gray-700 border-gray-60 " : "bg-whit",
     title: `text-center mb-6 ${darkMode ? "text-white" : "text-gray-800"}`,
     linkText: darkMode
       ? "text-blue-400 hover:text-blue-300"
@@ -54,7 +55,8 @@ export const Register = ({ darkMode = false }) => {
   };
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select className="w-[69px]"
+      <Select
+        className="w-[69px]"
         // style={{
         //   width: 70,
         // }}
@@ -77,8 +79,8 @@ export const Register = ({ darkMode = false }) => {
           autoComplete="off"
           layout="vertical"
         >
-          <Row gutter={16}>
-            <Col xs={24} sm={8}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={12} md={8}>
               <Form.Item
                 name="firstName"
                 rules={[
@@ -96,7 +98,7 @@ export const Register = ({ darkMode = false }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={12} md={8}>
               <Form.Item name="middleName" className="mb-0">
                 <Input
                   placeholder="Middle Name"
@@ -105,7 +107,7 @@ export const Register = ({ darkMode = false }) => {
                 />
               </Form.Item>
             </Col>
-            <Col xs={24} sm={8}>
+            <Col xs={24} sm={24} md={8}>
               <Form.Item
                 name="lastName"
                 rules={[
@@ -176,11 +178,11 @@ export const Register = ({ darkMode = false }) => {
             ]}
           >
             <Input
-              addonBefore={prefixSelector}
+              // addonBefore={prefixSelector}
               placeholder="Phone Number"
               size="large"
               className={formStyles.input}
-              max={10}
+              // max={10}
             />
           </Form.Item>
 
@@ -250,9 +252,9 @@ export const Register = ({ darkMode = false }) => {
             className={darkMode ? "text-gray-400" : "text-gray-600"}
           >
             Already have an account?{" "}
-            <a href="/login" className={formStyles.linkText}>
+            <Link to="/login" className={formStyles.linkText}>
               Log in
-            </a>
+            </Link>
           </Typography.Text>
         </div>
       </div>

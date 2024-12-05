@@ -27,10 +27,10 @@ export const serverLogin = async (values) => {
     }
   } catch (error) {
     loadingMessage(); // Hide the loading message
-    showMessage("error", error?.response?.data.error, 3);
+    showMessage("error", error?.response?.data?.error, 3);
     // console.error(error.response.data);
     // throw error; // Rethrow to handle it in the calling function
   } finally {
-    loadingMessage(); // Hide the loading
+    loadingMessage(); 
   }
 };

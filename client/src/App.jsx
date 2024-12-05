@@ -2,15 +2,19 @@ import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/auth/Login";
-import Error404 from "./pages/Error404";
+import Error404 from "./pages/utils/Error404";
 import { Navbar } from "./components/Navbar";
 
 import "./assets/styles/App.css";
 import Forgot from "./pages/auth/Forgot";
 import Register from "./pages/auth/Register";
 
+import { useSelector } from "react-redux";
+
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
+  const darkMode = useSelector((state) => state.app.darkMode);
+
   const user = {
     first_name: "Judson",
     last_name: "Macejkovic",
@@ -27,9 +31,10 @@ function App() {
     },
     profile_pic: "https://tinyurl.com/ytdspj2e",
   };
+
   return (
     <>
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Navbar darkMode={darkMode}  />
       <div className="h-screen mt-[60px]">
         <Routes>
           <Route path="/" element={<Home />} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, message } from "antd";
-
+import { Link } from "react-router-dom";
 export const Forgot = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
 
@@ -85,9 +85,9 @@ export const Forgot = ({ darkMode = false }) => {
             className={`${darkMode ? "text-gray-400" : "text-gray-600"}`}
           >
             Remember your password?{" "}
-            <a href="/login" className={linkColor}>
+            <Link to="/login" className={linkColor}>
               Log in
-            </a>
+            </Link>
           </Typography.Text>
         </div>
       </div>

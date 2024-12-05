@@ -29,7 +29,7 @@ export const NotFound = ({ darkMode }) => {
       className={`fixed inset-0 flex items-center justify-center ${styles.background}`}
     >
       <div
-        className={`p-10 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container}`}
+        className={`m-3 md:m-0 p-5 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container}`}
       >
         <div className="mb-6">
           <h1 className={`text-6xl font-bold ${styles.heading} mb-4`}>
