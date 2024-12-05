@@ -1,19 +1,30 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Login } from "./pages/auth/Login";
-import Error404 from "./pages/utils/Error404";
-import { Navbar } from "./components/Navbar";
+import { Routes, Route, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import "./assets/styles/App.css";
+import { Navbar } from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Home } from "./pages/Home";
+import { Profiles } from "./pages/Profiles";
+import ProtectedRoute from "./pages/utils/ProtectedRoute";
+
+import Meetings from "./pages/dashboard/Meetings";
+import Scholarships from "./pages/dashboard/Scholarships";
+import Users from "./pages/dashboard/Users";
+import HomeDash from "./pages/dashboard/HomeDash";
+
+import { Login } from "./pages/auth/Login";
 import Forgot from "./pages/auth/Forgot";
 import Register from "./pages/auth/Register";
 
-import { useSelector } from "react-redux";
+import Error404 from "./pages/utils/Error404";
+import "./assets/styles/App.css";
 
 function App() {
   // const [darkMode, setDarkMode] = useState(false);
   const darkMode = useSelector((state) => state.app.darkMode);
+  const userData = useSelector((state) => state.user.userData);
+  // console.log(userData);
 
   const user = {
     first_name: "Judson",
@@ -34,16 +45,42 @@ function App() {
 
   return (
     <>
-      <Navbar darkMode={darkMode}  />
-      <div className="h-screen mt-[60px]">
+      <Navbar darkMode={darkMode} />
+      <div className="h-screen  pt-[63px] md:pt-[60px] ">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route index element={<Home />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profiles />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="dash"
+            element={
+              <ProtectedRoute allowedRoles={["admin"]}><Outlet/></ProtectedRoute>
+            }
+          >
+            <Route path="" element={<HomeDash />} />
+            <Route path="users" element={<Users />} />
+            <Route path="meetings" element={<Meetings />} />
+            <Route path="scholarships" element={<Scholarships />} />
+          </Route>
+
           <Route path="/login" element={<Login darkMode={darkMode} />} />
-          <Route path="/forgot-password" element={<Forgot darkMode={darkMode} />}/>
-          <Route path="/register" element={<Register darkMode={darkMode}/>} />
+          <Route
+            path="/forgot-password"
+            element={<Forgot darkMode={darkMode} />}
+          />
+          <Route path="/register" element={<Register darkMode={darkMode} />} />
+
           <Route path="*" element={<Error404 darkMode={darkMode} />} />
         </Routes>
       </div>
+      <Footer darkMode={darkMode} />
     </>
   );
 }

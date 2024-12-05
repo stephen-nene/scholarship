@@ -1,10 +1,25 @@
 # React + Vite + Redux + Tailwind
 
 # Description:
+Here are some more free templates and resources for creating ready-made Tailwind-styled components:
 
-Kickstart your React web application development with this template! The Vite React Redux Tailwind Template provides you with a clean and modern JavaScript setup, including popular libraries and tools, so you can focus on building your application right away. Whether you're starting a new project or refactoring an existing one, this template saves you time and effort.
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [ReadymadeUI](https://readymadeui.com/)
+- [TailwindFlex](https://tailwindflex.com/)
+- [UIverse.io](https://uiverse.io/)
+- [Tailwind Components](https://tailwindcomponents.com/)
+- [Flowbite](https://flowbite.com/)
+- [Meraki UI](https://merakiui.com/)
+- [Tailwind Toolbox](https://www.tailwindtoolbox.com/)
+- [Tailwind UI](https://tailwindui.com/) (Note: Paid with some free components)
+- [Treact](https://treact.owaiskhan.me/)
+- [Kitwind](https://kitwind.io/)
+- [Tailwind Starter Kit](https://www.creative-tim.com/learning-lab/tailwind-starter-kit/presentation)
+- [Tailwind CSS Cheatsheet](https://nerdcave.com/tailwind-cheat-sheet)
+- [DaisyUI](https://daisyui.com/)
+- [Heroicons](https://heroicons.com/) (Tailwind-specific icons, free to use)
+- [Tailwind CSS Playground](https://play.tailwindcss.com/) (A live playground to experiment with components and layouts)
 
+These resources should give one a good variety of free, ready-to-use Tailwind CSS components and templates!
 
 ## Technologies Used
 
@@ -26,38 +41,9 @@ Feel free to contribute to this project by submitting issues or pull requests. Y
 1. Fork the repository.
 2. Create your feature branch: `git checkout -b feature/my-feature.`
 3. Commit your changes: `git commit -m 'Add my feature'`.
-4. Push to the branch: g`it push origin feature/my-feature`.
+4. Push to the branch: `git push origin feature/my-feature`.
 5. Open a pull request.
 
-# Template Setup
-
-## Folder Structure:
-
-```
-project-root/
-│
-├── src/
-│   ├── components/
-│   │   ├── App.js
-│   │   ├── ...
-│   │
-│   ├── store/
-│   │   ├── store.js
-│   │   ├── ...
-│   │
-│   ├── styles/
-│   │   ├── main.css
-│   │   ├── ...
-│   │
-│   ├── index.html
-│   ├── index.js
-│   └── ...
-│
-├── package.json
-├── README.md
-├── ...
-
-```
 
 ##  [![BuiltBy](https://img.shields.io/badge/Built-By-GE7A10?style=flat-square&logo=BuzzFeed&logoColor=white)](https://github.com/stephen-nene)
 - **[stevo-nene](https://github.com/stephen-nene)**

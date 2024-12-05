@@ -1,6 +1,6 @@
 // UserAction.js
 
-export const login = (userData) => {
+export const loginAction = (userData) => {
     return {
       type: 'LOGIN',
       payload: userData
@@ -15,7 +15,7 @@ export const login = (userData) => {
   };
   
   
-  export const logout = () => {
+  export const logoutAction = () => {
     return {
       type: 'LOGOUT'
     };

@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { Button, Checkbox, Form, Input, Typography, message } from "antd";
 import { Link } from "react-router-dom";
 import { serverLogin } from "../../helpers/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 export const Login = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user.userData);
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
       // console.log("Login attempt:", values);
-      await serverLogin(values); // This will handle the API call and show success/error message
+      await serverLogin(values, navigate, dispatch);
     } catch (error) {
       console.error("Error during login:", error.response);
-      
     } finally {
       setLoading(false);
     }
@@ -29,7 +33,7 @@ export const Login = ({ darkMode = false }) => {
 
   return (
     <div
-      className={`min-h-screen flex items-center justify-center transition-colors duration-300 ${
+      className={`min-h-screen  flex items-center justify-center transition-colors duration-300 ${
         darkMode ? "bg-gray-900" : "b"
       }`}
     >
@@ -37,7 +41,9 @@ export const Login = ({ darkMode = false }) => {
         className={`w-full max-w-md p-8 space-y-6 rounded-xl border shadow-lg ${formStyles}`}
       >
         <Typography.Title level={2}>
-          <p className={`text-center mb-2 ${textColor}`}>Welcome Back</p>
+          <p className={`text-center mb-2 ${textColor}`}>
+            {!userData ? "Welcome Back" : `LoggedIn as ${userData?.username}`}
+          </p>
         </Typography.Title>
 
         <Form
