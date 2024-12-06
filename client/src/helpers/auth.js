@@ -22,7 +22,6 @@ const apiClient = axios.create({
 // Add a request interceptor to include custom headers dynamically
 apiClient.interceptors.request.use((config) => {
   config.headers["X-Frontend-Host"] = window.location.origin;
-  // console.log(config);
   return config;
 });
 
@@ -41,7 +40,7 @@ export const getCurrentUser = async (dispatch, navigate) => {
       throw new Error("Failed to fetch user data");
     }
   } catch (error) {
-    console.log(error?.response?.data);
+    // console.log(error?.response?.data);
     // showMessage("error", error?.response?.data?.error || "An error occurred", 3);
   }
 };
@@ -84,7 +83,7 @@ export const serverSignup = async (values, navigate,dispatch) => {
     }
   } catch (error) {
     loadingMessage();
-    console.error("Error response:", error.response?.data);
+    console.error("Error response:", error.response);
     throw error;
   } finally {
     loadingMessage();

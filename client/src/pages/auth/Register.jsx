@@ -20,13 +20,7 @@ export const Register = ({ darkMode = false }) => {
     setLoading(true);
 
     try {
-      // Validate and clean up data
-      const cleanedValues = {
-        ...values,
-        fullName: `${values.firstName} ${values.middleName || ""} ${
-          values.lastName
-        }`.trim(),
-      };
+
 
       console.log("Registration data:", { user: { ...values } });
       await serverSignup({ user: { ...values } },navigate);

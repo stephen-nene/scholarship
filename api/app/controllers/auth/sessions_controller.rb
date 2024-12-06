@@ -5,9 +5,11 @@ module Auth
     # POST /auth/register
     def register
       user = User.new(user_params)
+      frontend_url = request.headers["X-Frontend-host"]
+      puts "url from react",frontend_url
       if user.save
         user.generate_token(1.day.from_now)
-        UserMailer.welcome_email(user).deliver_now
+        UserMailer.welcome_email(user,frontend_url).deliver_now
         render json: {user: UserSerializer.new(user), message: "User registered successfully. Please check your email to activate your account." }, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
@@ -103,7 +105,6 @@ module Auth
       if session[:user_id]
         @current_user = User.find_by(id: session[:user_id])
 
-        # Check if the session has expired (assuming you set expiry when logging in)
         if session[:expires_at] && session[:expires_at] < Time.current
           render json: { error: "Unauthorized: Session expired" }, status: :unauthorized
         elsif @current_user.nil?
