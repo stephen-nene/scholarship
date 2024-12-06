@@ -8,7 +8,7 @@ module Auth
       if user.save
         user.generate_token(1.day.from_now)
         UserMailer.welcome_email(user).deliver_now
-        render json: { message: "User registered successfully. Please check your email to activate your account." }, status: :created
+        render json: {user: UserSerializer.new(user), message: "User registered successfully. Please check your email to activate your account." }, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
@@ -22,7 +22,6 @@ module Auth
       end
 
       user = User.find_by(token: params[:token])
-      puts "Token here #{user.token_expiry}"
 
       if user.nil?
         render json: { error: "Invalid activation token." }, status: :unprocessable_entity

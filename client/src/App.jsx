@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -16,15 +16,24 @@ import HomeDash from "./pages/dashboard/HomeDash";
 import { Login } from "./pages/auth/Login";
 import Forgot from "./pages/auth/Forgot";
 import Register from "./pages/auth/Register";
+import Activate from "./pages/auth/Activate";
 
 import Error404 from "./pages/utils/Error404";
 import "./assets/styles/App.css";
 
+import { getCurrentUser } from "./helpers/auth";
+
 function App() {
-  // const [darkMode, setDarkMode] = useState(false);
   const darkMode = useSelector((state) => state.app.darkMode);
   const userData = useSelector((state) => state.user.userData);
-  // console.log(userData);
+  const dispatch = useDispatch()
+  console.log(userData);
+  useEffect(() =>{
+    if(!userData.length) {
+
+      getCurrentUser(dispatch)
+    }
+  },[])
 
   const user = {
     first_name: "Judson",
@@ -83,6 +92,8 @@ function App() {
                 path="/register"
                 element={<Register darkMode={darkMode} />}
               />
+              <Route
+                path="/activate/:token" element={<Activate/>} />
 
               <Route path="*" element={<Error404 darkMode={darkMode} />} />
             </Routes>

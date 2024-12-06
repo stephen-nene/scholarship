@@ -1,10 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { serverLogout } from "../helpers/auth";
 
 export const Profiles = () => {
   const user = useSelector((state) => state.user.userData);
   const darkMode = useSelector((state) => state.app.darkMode);
   const [edit, setEdit] = React.useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Checking if the user data is available
   if (!user) {
@@ -23,7 +27,8 @@ export const Profiles = () => {
     role,
   } = user;
 
-  const { street, city, state, country } = addresses[0] || {};
+  const { street = "", city = "", state = "", country = "" } =
+  (addresses && addresses[0]) || {};
 
   // Dark mode classes
   const bgColor = darkMode ? "bg-gray-900" : "bg-blue-500";
@@ -111,6 +116,7 @@ export const Profiles = () => {
               <button
                 className={`bg-red-500 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:bg-red-600 focus:outline-none transition-all`}
                 type="button"
+                onClick={()=>serverLogout(dispatch,navigate)}
               >
                 Logout
               </button>

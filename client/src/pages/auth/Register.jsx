@@ -9,10 +9,12 @@ import {
   Col,
   Select,
 } from "antd";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { serverSignup } from "../../helpers/auth";
 
 export const Register = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -26,12 +28,14 @@ export const Register = ({ darkMode = false }) => {
         }`.trim(),
       };
 
-      // Simulate API call
-      console.log("Registration data:", values, cleanedValues);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      message.success("Account created successfully! Please log in.");
+      console.log("Registration data:", { user: { ...values } });
+      await serverSignup({ user: { ...values } },navigate);
     } catch (error) {
-      message.error("Registration failed. Please try again.");
+      const errorMessage = Array.isArray(error?.response?.data?.errors)
+        ? error.response.data.errors.join(", ")
+        : error?.response?.data?.error || "An unexpected error occurred.";
+
+      message.error(errorMessage, 3);
     } finally {
       setLoading(false);
     }
@@ -82,7 +86,7 @@ export const Register = ({ darkMode = false }) => {
           <Row gutter={[16, 16]}>
             <Col xs={24} sm={12} md={8}>
               <Form.Item
-                name="firstName"
+                name="first_name"
                 rules={[
                   {
                     required: true,
@@ -99,7 +103,7 @@ export const Register = ({ darkMode = false }) => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12} md={8}>
-              <Form.Item name="middleName" className="mb-0">
+              <Form.Item name="middle_name" className="mb-0">
                 <Input
                   placeholder="Middle Name"
                   size="large"
@@ -109,7 +113,7 @@ export const Register = ({ darkMode = false }) => {
             </Col>
             <Col xs={24} sm={24} md={8}>
               <Form.Item
-                name="lastName"
+                name="last_name"
                 rules={[
                   {
                     required: true,
@@ -165,7 +169,7 @@ export const Register = ({ darkMode = false }) => {
           </Form.Item>
 
           <Form.Item
-            name="phoneNumber"
+            name="phonenumber"
             rules={[
               {
                 required: true,
