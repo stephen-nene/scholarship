@@ -79,7 +79,7 @@ export const Navbar = () => {
                       </Link>
                     </>
                   )}
-                  {!userData && (
+                  {userData && (
                     <Link to="/" className="btn btn-login">
                       public
                     </Link>
@@ -131,20 +131,32 @@ export const Navbar = () => {
                 <Link to="/">unauthorized</Link>
               ) : (
                 <>
-                  <NavLink to="/dash" className="nav-link">
+                  <NavLink onClick={toggleMenu} to="/dash" className="nav-link">
                     DashHome
                   </NavLink>
-                  <NavLink to="/dash/scholarships" className="nav-link">
+                  <NavLink
+                    onClick={toggleMenu}
+                    to="/dash/scholarships"
+                    className="nav-link"
+                  >
                     Scholarships
                   </NavLink>
-                  <NavLink to="/dash/users" className="nav-link">
+                  <NavLink
+                    onClick={toggleMenu}
+                    to="/dash/users"
+                    className="nav-link"
+                  >
                     Users
                   </NavLink>
-                  <Link to="/dash/meetings" className="nav-link">
+                  <Link
+                    onClick={toggleMenu}
+                    to="/dash/meetings"
+                    className="nav-link"
+                  >
                     Meetings
                   </Link>
-                  {!userData && (
-                    <Link to="/" className="btn btn-login">
+                  {userData && (
+                    <Link onClick={toggleMenu} to="/" className="btn btn-login">
                       public
                     </Link>
                   )}
@@ -152,33 +164,40 @@ export const Navbar = () => {
               )
             ) : (
               <>
-                <NavLink to="/" className="nav-link" onClick={toggleMenu}>
+                <NavLink
+                  onClick={toggleMenu}
+                  to="/"
+                  className="nav-link"
+                >
                   Home
                 </NavLink>
-                <NavLink to="/about" className="nav-link" onClick={toggleMenu}>
-                  About
-                </NavLink>
                 <NavLink
+                  onClick={toggleMenu}
                   to="/services"
                   className="nav-link"
-                  onClick={toggleMenu}
                 >
-                  Services
+                  Scholarships
                 </NavLink>
-                <NavLink
-                  to="/profile"
-                  className="nav-link"
-                  onClick={toggleMenu}
-                >
-                  Profile
+                <NavLink onClick={toggleMenu} to="/about" className="nav-link">
+                  About
                 </NavLink>
-                <Link
-                  to="/login"
-                  className="btn btn-login"
-                  onClick={toggleMenu}
-                >
-                  Login
+                <Link onClick={toggleMenu} to="/login" className="nav-link">
+                  FAQs
                 </Link>
+                {!userData && (
+                  <Link
+                    onClick={toggleMenu}
+                    to="/login"
+                    className="btn btn-login"
+                  >
+                    Login
+                  </Link>
+                )}
+                {userData && userData.role === "admin" && (
+                  <Link to="/dash" className="btn btn-login">
+                    Dashboard
+                  </Link>
+                )}
               </>
             )}
           </div>

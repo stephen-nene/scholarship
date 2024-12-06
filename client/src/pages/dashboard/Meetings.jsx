@@ -1,7 +1,239 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
+import { message, Modal } from "antd";
+import {
+  MdOutlineChevronLeft,
+  MdOutlineChevronRight,
+  MdInfo,
+  MdOutlineDelete,
+} from "react-icons/md";
 
-export default function Meetings() {
+export default function Meetings({ darkMode }) {
+  const [meetings, setMeetings] = useState([]);
+  const [meta, setMeta] = useState({});
+  const [selectedMeeting, setSelectedMeeting] = useState(null);
+
+  const statusStyles = {
+    approved: "bg-green-500 text-green-800",
+    pending: "bg-yellow-400 text-yellow-900",
+    cancelled: "bg-red-400 text-gray-800",
+    completed: "bg-blue-400 text-blue-800",
+  };
+
+  const fetchMeetings = async (page = 1) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:3000/meetings?page=${page}`);
+      const data = await response.json();
+      setMeetings(data.meetings);
+      // console.log(data.meetings);
+      setMeta(data.meta);
+    } catch (error) {
+      console.error("Error fetching meetings:", error);
+      message.error("Failed to fetch meetings.");
+    }
+  };
+
+  useEffect(() => {
+    if(meetings){
+      fetchMeetings();
+    } 
+  }, []);
+
+  const showDetails = (meeting) => {
+    setSelectedMeeting(meeting);
+  };
+
+  const closeDetails = () => {
+    setSelectedMeeting(null);
+  };
+
   return (
-    <div className=''>Meetings Dash</div>
-  )
+    <div
+      className={`h-screen pt-3 font-[sans-serif] overflow-x-auto ${
+        darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+      }`}
+    >
+      <div className="filters">
+        <label>Status:</label>
+        <select  >
+          <option value="">All</option>
+          <option value="approved">Approved</option>
+          <option value="pending">Pending</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <table
+        className={`min-w-full ${
+          darkMode ? "bg-gray-800 text-gray-200" : "bg-white text-black"
+        }`}
+      >
+        <thead
+          className={`whitespace-nowrap text-md text-left font-semibold ${
+            darkMode ? "text-gray-400" : "text-black"
+          }`}
+        >
+          <tr>
+            <th className="p-4">Title</th>
+            <th className="p-4">Date</th>
+            <th className="p-4">Status</th>
+            <th className="p-4">Meeting Type</th>
+            <th className="p-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          { meetings?.map((meeting) => (
+            <tr
+              key={meeting.id}
+              className={`odd:bg-blue-50 ${
+                darkMode ? "odd:bg-gray-700" : "odd:bg-blue-50"
+              }`}
+            >
+              <td className="p-4">{meeting.title}</td>
+              <td className="p-4">
+                {new Date(meeting.date).toLocaleString()}
+              </td>
+              <td className="p-4">
+                <span
+                  className={`py-1 px-2 rounded-full text-xs ${
+                    statusStyles[meeting.status] ||
+                    "bg-yellow-200 text-yellow-800"
+                  }`}
+                >
+                  {meeting.status}
+                </span>
+              </td>
+              <td className="p-4">{meeting.meet_type.replace('_meeting','')}</td>
+              <td className="text-xl p-4">
+                <button
+                  onClick={() => showDetails(meeting)}
+                  className={`mr-4 ${
+                    darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+                  }`}
+                  title="View Details"
+                >
+                  <MdInfo />
+                </button>
+                <button
+                  className={`mr-4 ${
+                    darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+                  }`}
+                >
+                  <MdOutlineDelete
+                    onClick={() => message.error(`delete ${meeting.title}`)}
+                    className={`mr-4 ${
+                      darkMode ? "hover:text-red-400" : "hover:text-red-600"
+                    }`}
+                    title="Delete"
+                  />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div
+        className={`md:flex m-4 ${
+          darkMode ? " text-gray-200" : " text-gray-900"
+        }`}
+      >
+        <p className="text-sm flex-1">
+          Showing {meetings?.length} of {meta?.total_count || "?"} entries
+        </p>
+
+        <div className="flex items-center max-md:mt-4">
+          <ul className="flex space-x-1 ml-2 text-xl">
+            {/* Previous Page Button */}
+            {meta?.current_page !== 1 && (
+              <li
+                onClick={() => fetchMeetings(meta?.current_page - 1)}
+                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
+                  darkMode
+                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                    : "bg-blue-100 hover:bg-blue-200 text-blue-600"
+                }`}
+              >
+                <MdOutlineChevronLeft />
+              </li>
+            )}
+
+            {/* Page Numbers */}
+            {Array.from({ length: meta?.total_pages }).map((_, index) => {
+              const pageNumber = index + 1;
+              const isActive = pageNumber === meta?.current_page;
+
+              return (
+                <li
+                  onClick={() => fetchMeetings(pageNumber)}
+                  key={index}
+                  className={`flex items-center justify-center cursor-pointer text-sm w-7 h-7 rounded ${
+                    isActive
+                      ? darkMode
+                        ? "bg-gray-400 text-white"
+                        : "bg-blue-500 text-white"
+                      : darkMode
+                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                      : "bg-gray-200 hover:bg-gray-400 text-gray-800"
+                  }`}
+                >
+                  {pageNumber}
+                </li>
+              );
+            })}
+
+            {/* Next Page Button */}
+            {meta?.next_page && (
+              <li
+                onClick={() => fetchMeetings(meta?.current_page + 1)}
+                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
+                  darkMode
+                    ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
+                    : "bg-blue-100 hover:bg-blue-300 text-blue-600"
+                }`}
+              >
+                <MdOutlineChevronRight />
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+
+      {/* Modal for Detailed View */}
+      <Modal
+        title={selectedMeeting?.title}
+        open={!!selectedMeeting}
+        onCancel={closeDetails}
+        footer={null}
+        centered
+      >
+        {selectedMeeting && (
+          <div>
+            <p>
+              <strong>Description:</strong> {selectedMeeting.description}
+            </p>
+            <p>
+              <strong>Meeting Type:</strong> {selectedMeeting.meet_type}
+            </p>
+            <p>
+              <strong>Date:</strong>{" "}
+              {new Date(selectedMeeting.date).toLocaleString()}
+            </p>
+            <p>
+              <strong>Status:</strong> {selectedMeeting.status}
+            </p>
+            <p>
+              <strong>Meeting Link:</strong>{" "}
+              <a
+                href={selectedMeeting.meeting_link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Join Here
+              </a>
+            </p>
+          </div>
+        )}
+      </Modal>
+    </div>
+  );
 }

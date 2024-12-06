@@ -3,9 +3,12 @@ class MeetingsController < ApplicationController
 
   # GET /meetings
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.all.page(params[:page])
 
-    render json: @meetings
+    render json: { 
+      meetings: @meetings.map {|meeting| MeetingSerializer.new(meeting)},
+      meta: pagination_meta(@meetings) 
+    }
   end
 
   # GET /meetings/1
@@ -48,5 +51,15 @@ class MeetingsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def meeting_params
     params.expect(meeting: [:admin_id, :scholarship_id, :title, :description, :status, :date, :meet_type, :meeting_link])
+  end
+
+  def pagination_meta(meetings)
+    {
+      total_count: meetings.total_count,
+      total_pages: meetings.total_pages,
+      next_page: meetings.next_page,
+      current_page: meetings.current_page,
+      per_page: meetings.limit_value,
+    }
   end
 end
