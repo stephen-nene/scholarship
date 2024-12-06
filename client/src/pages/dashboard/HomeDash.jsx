@@ -6,7 +6,7 @@ export default function HomeDash() {
     <div className='min-h-screen'>
       <h1>HomeDash</h1>
       {/* This will render the nested routes */}
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 }

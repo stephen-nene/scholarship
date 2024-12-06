@@ -30,15 +30,15 @@ const user = {
 export const serverLogin = async (values,navigate,dispatch) => {
   const loadingMessage = message.loading("Logging in...", 0); 
 
-      dispatch(loginAction(user))
+      // dispatch(loginAction(user))
   try {
     const response = await axios.post(`${url}auth/login`, values);
     if (response.status === 200) {
       loadingMessage(); 
       showMessage("success",response?.data?.message, 2);
-      // dispatch(loginAction(response.data.user))
-      // navigate("/profiles")
-      // console.log(response.data)
+      dispatch(loginAction(response.data.user))
+      navigate("/profile")
+      console.log(response.data)
       return response.data; 
     } else {
       loadingMessage(); 

@@ -45,44 +45,50 @@ function App() {
 
   return (
     <>
-      <Navbar darkMode={darkMode} />
-      <div className="h-screen   ">
-        <div className="min-h-screen  pt-[63px] md:mt-[10px] ">
+      <div className="flex flex-col gap- ">
+        <Navbar darkMode={darkMode} />
+        <div className="bg-sky-900   min-h-screen  pt-[63px] md:mt-[5px]   ">
+          {/* <div className=""> */}
+            <Routes>
+              <Route index element={<Home />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profiles />
+                  </ProtectedRoute>
+                }
+              />
 
-        <Routes>
-          <Route index element={<Home />} />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profiles />
-              </ProtectedRoute>
-            }
-          />
+              <Route
+                path="dash"
+                element={
+                  <ProtectedRoute allowedRoles={["admin"]}>
+                    <Outlet />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="" element={<HomeDash />} />
+                <Route path="users" element={<Users />} />
+                <Route path="meetings" element={<Meetings />} />
+                <Route path="scholarships" element={<Scholarships />} />
+              </Route>
 
-          <Route
-            path="dash"
-            element={
-              <ProtectedRoute allowedRoles={["admin"]}><Outlet/></ProtectedRoute>
-            }
-          >
-            <Route path="" element={<HomeDash />} />
-            <Route path="users" element={<Users />} />
-            <Route path="meetings" element={<Meetings />} />
-            <Route path="scholarships" element={<Scholarships />} />
-          </Route>
+              <Route path="/login" element={<Login darkMode={darkMode} />} />
+              <Route
+                path="/forgot-password"
+                element={<Forgot darkMode={darkMode} />}
+              />
+              <Route
+                path="/register"
+                element={<Register darkMode={darkMode} />}
+              />
 
-          <Route path="/login" element={<Login darkMode={darkMode} />} />
-          <Route
-            path="/forgot-password"
-            element={<Forgot darkMode={darkMode} />}
-          />
-          <Route path="/register" element={<Register darkMode={darkMode} />} />
-
-          <Route path="*" element={<Error404 darkMode={darkMode} />} />
-        </Routes>
-        </div>
-      <Footer darkMode={darkMode} />
+              <Route path="*" element={<Error404 darkMode={darkMode} />} />
+            </Routes>
+          </div>
+        {/* </div> */}
+          <Footer darkMode={darkMode} />
       </div>
     </>
   );
