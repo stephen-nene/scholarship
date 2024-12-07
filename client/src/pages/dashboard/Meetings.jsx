@@ -6,11 +6,15 @@ import {
   MdInfo,
   MdOutlineDelete,
 } from "react-icons/md";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMeetings } from "../../helpers/admins";
 
 export default function Meetings({ darkMode }) {
   const [meetings, setMeetings] = useState([]);
   const [meta, setMeta] = useState({});
   const [selectedMeeting, setSelectedMeeting] = useState(null);
+  const paginatedMeetings = useSelector((state) => state.app.paginatedMeetings);
+  const dispatch = useDispatch();
 
   const statusStyles = {
     approved: "bg-green-500 text-green-800",
@@ -19,13 +23,18 @@ export default function Meetings({ darkMode }) {
     completed: "bg-blue-400 text-blue-800",
   };
 
-  const fetchMeetings = async (page = 1) => {
+  const getMeetings = async (page = 1) => {
+    if (paginatedMeetings[page]) {
+      setMeetings(paginatedMeetings[page].meetings);
+      setMeta(paginatedMeetings[page].meta);
+      return paginatedMeetings[page];
+    }
     try {
-      const response = await fetch(`http://127.0.0.1:3000/meetings?page=${page}`);
-      const data = await response.json();
-      setMeetings(data.meetings);
-      // console.log(data.meetings);
-      setMeta(data.meta);
+      const response = await fetchMeetings(page, dispatch);
+      if (response.status === 200) {
+        setMeetings(response?.meetings);
+        setMeta(response?.meta);
+      }
     } catch (error) {
       console.error("Error fetching meetings:", error);
       message.error("Failed to fetch meetings.");
@@ -33,9 +42,9 @@ export default function Meetings({ darkMode }) {
   };
 
   useEffect(() => {
-    if(meetings){
-      fetchMeetings();
-    } 
+    if (meetings) {
+      getMeetings();
+    }
   }, []);
 
   const showDetails = (meeting) => {
@@ -54,7 +63,7 @@ export default function Meetings({ darkMode }) {
     >
       <div className="filters">
         <label>Status:</label>
-        <select  >
+        <select>
           <option value="">All</option>
           <option value="approved">Approved</option>
           <option value="pending">Pending</option>
@@ -81,7 +90,7 @@ export default function Meetings({ darkMode }) {
           </tr>
         </thead>
         <tbody>
-          { meetings?.map((meeting) => (
+          {meetings?.map((meeting) => (
             <tr
               key={meeting.id}
               className={`odd:bg-blue-50 ${
@@ -89,9 +98,7 @@ export default function Meetings({ darkMode }) {
               }`}
             >
               <td className="p-4">{meeting.title}</td>
-              <td className="p-4">
-                {new Date(meeting.date).toLocaleString()}
-              </td>
+              <td className="p-4">{new Date(meeting.date).toLocaleString()}</td>
               <td className="p-4">
                 <span
                   className={`py-1 px-2 rounded-full text-xs ${
@@ -102,7 +109,9 @@ export default function Meetings({ darkMode }) {
                   {meeting.status}
                 </span>
               </td>
-              <td className="p-4">{meeting.meet_type.replace('_meeting','')}</td>
+              <td className="p-4">
+                {meeting.meet_type.replace("_meeting", "")}
+              </td>
               <td className="text-xl p-4">
                 <button
                   onClick={() => showDetails(meeting)}
@@ -144,18 +153,18 @@ export default function Meetings({ darkMode }) {
         <div className="flex items-center max-md:mt-4">
           <ul className="flex space-x-1 ml-2 text-xl">
             {/* Previous Page Button */}
-            {meta?.current_page !== 1 && (
-              <li
-                onClick={() => fetchMeetings(meta?.current_page - 1)}
-                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
-                  darkMode
-                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                    : "bg-blue-100 hover:bg-blue-200 text-blue-600"
-                }`}
-              >
-                <MdOutlineChevronLeft />
-              </li>
-            )}
+            <button
+              onClick={() => getMeetings(meta?.current_page - 1)}
+              className={`flex items-center justify-center w-7 h-7 rounded ${
+                darkMode
+                  ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                  : "bg-blue-100 hover:bg-blue-200 text-blue-600"
+              }`}
+              aria-label="Previous Page"
+              disabled={meta?.current_page === 1}
+            >
+              <MdOutlineChevronLeft />
+            </button>
 
             {/* Page Numbers */}
             {Array.from({ length: meta?.total_pages }).map((_, index) => {
@@ -163,10 +172,10 @@ export default function Meetings({ darkMode }) {
               const isActive = pageNumber === meta?.current_page;
 
               return (
-                <li
-                  onClick={() => fetchMeetings(pageNumber)}
+                <button
+                  onClick={() => getMeetings(pageNumber)}
                   key={index}
-                  className={`flex items-center justify-center cursor-pointer text-sm w-7 h-7 rounded ${
+                  className={`flex items-center justify-center text-sm w-7 h-7 rounded ${
                     isActive
                       ? darkMode
                         ? "bg-gray-400 text-white"
@@ -175,25 +184,26 @@ export default function Meetings({ darkMode }) {
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-200 hover:bg-gray-400 text-gray-800"
                   }`}
+                  aria-label={`Page ${pageNumber}`}
                 >
                   {pageNumber}
-                </li>
+                </button>
               );
             })}
 
             {/* Next Page Button */}
-            {meta?.next_page && (
-              <li
-                onClick={() => fetchMeetings(meta?.current_page + 1)}
-                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
-                  darkMode
-                    ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
-                    : "bg-blue-100 hover:bg-blue-300 text-blue-600"
-                }`}
-              >
-                <MdOutlineChevronRight />
-              </li>
-            )}
+            <button
+              onClick={() => getMeetings(meta?.current_page + 1)}
+              className={`flex items-center justify-center w-7 h-7 rounded ${
+                darkMode
+                  ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
+                  : "bg-blue-100 hover:bg-blue-300 text-blue-600"
+              }`}
+              aria-label="Next Page"
+              disabled={meta?.next_page === null}
+            >
+              <MdOutlineChevronRight />
+            </button>
           </ul>
         </div>
       </div>

@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Typography, message } from "antd";
+import { Button, Form, Input, Typography, Alert } from "antd";
 import { Link } from "react-router-dom";
+import { serverForgotPass } from "../../helpers/auth";
+
 export const Forgot = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
+  const [serverMessage, setServerMessage] = useState("");
+  const [error, setError] = useState("");
 
   const onFinish = async (values) => {
     setLoading(true);
+    setServerMessage("");
+    setError("");
     try {
-      // Simulate API call
-      console.log("Password reset request:", values);
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      message.success("Password reset email sent successfully!");
-    } catch (error) {
-      message.error("Failed to send password reset email.");
+      // Call the server to send the reset link
+      const response = await serverForgotPass(values.email);
+      console.log("Password reset request:", response);
+      setServerMessage(response?.message || "Password reset link sent!");
+    } catch (err) {
+      const errorMessage =
+        err?.response?.data?.error || "Failed to send password reset email.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -39,6 +47,24 @@ export const Forgot = ({ darkMode = false }) => {
         <Typography.Title level={2} className={`text-center mb-6 ${textColor}`}>
           Forgot Password
         </Typography.Title>
+
+        {/* Alert Messages */}
+        {serverMessage && (
+          <Alert
+            message={serverMessage}
+            type="success"
+            showIcon
+            className="mb-4"
+          />
+        )}
+        {error && (
+          <Alert
+            message={error}
+            type="error"
+            showIcon
+            className="mb-4"
+          />
+        )}
 
         <Form
           name="forgot-password"

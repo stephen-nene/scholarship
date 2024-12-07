@@ -1,22 +1,36 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Typography, message } from "antd";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Typography,
+  message,
+} from "antd";
 import { Link } from "react-router-dom";
 import { serverLogin } from "../../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 export const Login = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
+  const [serverMessage, setServerMessage] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);
 
   const onFinish = async (values) => {
     setLoading(true);
+    setServerMessage("");
+    setError("");
     try {
       // console.log("Login attempt:", values);
       await serverLogin(values, navigate, dispatch);
+      setTimeout(()=>{},2000)
     } catch (error) {
-      console.error("Error during login:", error.response);
+      setError(error.response?.data?.error || "An unexpected error occurred.");
+      // console.error("Error during login:", error.response);
     } finally {
       setLoading(false);
     }
@@ -42,9 +56,29 @@ export const Login = ({ darkMode = false }) => {
       >
         <Typography.Title level={2}>
           <p className={`text-center mb-2 ${textColor}`}>
-            {!userData ? "Welcome Back" : `LoggedIn as ${userData?.username}`}
+            {!userData ? "Welcome Back" : `Hello ${userData.role} ${userData?.username}`}
           </p>
         </Typography.Title>
+
+        {serverMessage && (
+          <Alert
+            message={serverMessage}
+            type="success"
+            showIcon
+            className="mb-4"
+            closable
+          />
+        )}
+        {error && (
+          <Alert
+            message={error}
+            type="error"
+            showIcon
+            className="mb-4"
+            closable
+            closeIcon
+          />
+        )}
 
         <Form
           name="login"
@@ -102,7 +136,7 @@ export const Login = ({ darkMode = false }) => {
             <Form.Item name="remember_me" valuePropName="checked" noStyle>
               <Checkbox className={textColor}>Remember me</Checkbox>
             </Form.Item>
-            <Link className={linkColor} to="/forgot-password">
+            <Link className={linkColor} to="/forgot">
               Forgot password?
             </Link>
           </div>

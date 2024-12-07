@@ -11,19 +11,21 @@ import {
 } from "antd";
 import { Link,useNavigate } from "react-router-dom";
 import { serverSignup } from "../../helpers/auth";
+import { useDispatch } from "react-redux";
 
 export const Register = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  
   const onFinish = async (values) => {
     setLoading(true);
 
     try {
 
 
-      console.log("Registration data:", { user: { ...values } });
-      await serverSignup({ user: { ...values } },navigate);
+      // console.log("Registration data:", { user: { ...values } });
+      await serverSignup({ user: { ...values } },navigate,dispatch);
     } catch (error) {
       const errorMessage = Array.isArray(error?.response?.data?.errors)
         ? error.response.data.errors.join(", ")

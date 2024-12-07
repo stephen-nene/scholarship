@@ -26,14 +26,13 @@ export const NotFound = ({ darkMode }) => {
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center ${styles.background}`}
+      className={`min-h-screen flex items-center justify-center ${styles.background}`}
     >
       <div
-        className={`m-3 md:m-0 p-5 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container}`}
+        className={`m-3 md:m-0 p-5 rounded-2xl text-center max-w-lg w-full border-2 ${styles.container} max-h-[90vh] overflow-y-auto`}
       >
         <div className="mb-6">
           <h1 className={`text-6xl font-bold ${styles.heading} mb-4`}>
-            {/* <span className="text-red-500 uppercase">Error</span> 404 */}
             404
           </h1>
           <p className={`${styles.text} my-4`}>
@@ -50,7 +49,7 @@ export const NotFound = ({ darkMode }) => {
           Beam Me Back
         </button>
       </div>
-    </div>
+     </div>
   );
 };
 

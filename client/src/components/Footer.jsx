@@ -9,7 +9,7 @@ export default function Footer() {
     const darkMode = useSelector((state) => state.app.darkMode);
 
     return (
-        <footer className={`${!darkMode ? "bg-white" : "bg-gray-950 dark"} transition`}>
+        <footer className={`${!darkMode ? "bg-sky-100 " : "bg-gray-950 dark"} transition`}>
             <div className="container px-6 py-12 mx-auto">
                 <div className="md:flex md:-mx-3 md:items-center md:justify-between">
                     <h1

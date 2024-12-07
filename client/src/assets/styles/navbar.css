@@ -1,6 +1,6 @@
 /* General styles */
 .navbar {
-  background-color: white;
+  /* background-color: white; */
   position: fixed;
   top: 0;
   width: 100%;
@@ -94,6 +94,10 @@
 
 
 /* footer */
+footer{
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
 .cta-button {
   display: inline-flex;

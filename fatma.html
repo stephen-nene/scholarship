@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ocean waves</title>
+    <style>
+      body {
+        background: #1da2d8;
+        background-image: url(https://images.unsplash.com/photo-1733299704493-9aa9c608778a?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+      img {
+        max-width: 100%;
+      }
+
+      h1 {
+        color: #1da2d8;
+        text-align: center;
+        text-transform: capitalize;
+      }
+      p {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .container {
+        text-align: center;
+        margin: 20px auto;
+        max-width: 600px;
+        background: white;
+        padding: 20px;
+      }
+      footer {
+        text-align: center;
+        font-size: 20px;
+        margin: 20px;
+      }
+
+      .theme {
+        display: block;
+        margin: 0 auto;
+        background: #7fcdff;
+        color: white;
+        font-size: 20px;
+        padding: 15px;
+        border-radius: 10px;
+      }
+      .theme:hover {
+        color: #1da2d8;
+        background: white;
+      }
+      .wave1 {
+        border-radius: 3px;
+        transition: all ease-in-out;
+        width: 400px;
+      }
+      .wave1.theme:hover {
+        filter: contrast(80%);
+        transform: scale(1.5);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 5px;
+        margin-top: 20px;
+      }
+      .grid img {
+        width: 100%;
+        max-width: 250px;
+        transition: all 150ms ease;
+        border-radius: 5px;
+        margin: 0px auto;
+      }
+      .grid img:hover {
+        transform: scale(1.2);
+      }
+      .color {
+        background: #00bfff;
+        color: white;
+      }
+
+      /* .color .container {
+        background: #00bfff;
+      } */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="theme">change Theme</button>
+      <h1>Ocean waves</h1>
+      <div class="grid">
+        <!-- <a href="https://en.wikipedia.org/wiki/Wind_wave" target="_blank"> -->
+        <img
+          src="https://images.unsplash.com/photo-1733299703943-9482aac3dc60?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          class="wave1"
+        />
+        <!-- </a> -->
+        <img
+          src="https://images.unsplash.com/photo-1733299707431-04dd44ad3bb7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1733299707415-409cd3a14aca?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        />
+      </div>
+      <p>
+        Ocean waves are nature`s heartbeat-constant,soothing,and powerful<br />
+        They rise and fall,carrying whispers of the sea,reflecting sunlight in
+        shimmering blues. Their rhythm calms the mind,as if the ocean itself is
+        breathing with you. Watchung waves is a reminder of life´s endless
+        flow-peaceful,beautiful and eternal.
+
+        <a href="https://www.youtube.com/watch?v=kTuDGLs0nZE" target="_blank">
+          Listen to waves
+        </a>
+      </p>
+      <footer>
+        <em> coded by fatuma adan </em>
+      </footer>
+    </div>
+    <script>
+      function changeTheme() {
+        let body = document.querySelector(".container");
+        if (body.classList.contains("color")) {
+          body.classList.remove("color");
+        } else {
+          body.classList.add("color");
+        }
+      }
+      let images = document.querySelectorAll('img')
+      let button = document.querySelector("button");
+      button.addEventListener("click", changeTheme);
+    </script>
+  </body>
+</html>

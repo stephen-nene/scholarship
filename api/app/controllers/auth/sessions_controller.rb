@@ -1,16 +1,16 @@
 module Auth
   class SessionsController < ApplicationController
     before_action :authorize_request, only: [:me, :logout]
+    before_action :set_frontend_url
 
     # POST /auth/register
     def register
       user = User.new(user_params)
-      frontend_url = request.headers["X-Frontend-host"]
-      puts "url from react",frontend_url
+      puts "url from react", @frontend_url
       if user.save
         user.generate_token(1.day.from_now)
-        UserMailer.welcome_email(user,frontend_url).deliver_now
-        render json: {user: UserSerializer.new(user), message: "User registered successfully. Please check your email to activate your account." }, status: :created
+        UserMailer.welcome_email(user, @frontend_url).deliver_now
+        render json: { user: UserSerializer.new(user), message: "User registered successfully. Please check your email to activate your account." }, status: :created
       else
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
       end
@@ -56,13 +56,35 @@ module Auth
     def forgot_password
       user = User.find_by(email: params[:email])
       if user
-        user.generate_token()
-
-        # Send the password reset email with the link containing the token
-        UserMailer.reset_password_email(user).deliver_now
-        render json: { message: "Reset instructions sent to your email" }, status: :ok
+        if user.token.present? && user.token_expiry > Time.current
+          UserMailer.reset_password_email(user, @frontend_url).deliver_now
+          render json: { message: "Reset instructions had been sent to your email" }, status: :ok
+        else
+          user.generate_token
+          UserMailer.reset_password_email(user, @frontend_url).deliver_now
+          render json: { message: "Reset instructions sent to your email" }, status: :ok
+        end
       else
-        render json: { error: "Email not found" }, status: :not_found
+        render json: { error: "User with that email was not found" }, status: :not_found
+      end
+    end
+
+    # POST /auth/resend_activation
+    def resend_activation
+      # user = User.find_by(email: params[:email])
+      user = @current_user
+
+      if user
+        if user.token.present? && user.token_expiry > Time.current
+          UserMailer.welcome_email(user, @frontend_url).deliver_now
+          render json: { message: "Activation email already sent. Please check your inbox." }, status: :ok
+        else
+          user.generate_token(1.day.from_now)
+          UserMailer.welcome_email(user, @frontend_url).deliver_now
+          render json: { message: "Activation email has been resent. Please check your inbox." }, status: :ok
+        end
+      else
+        render json: { error: "No user found with that email." }, status: :not_found
       end
     end
 
@@ -93,6 +115,10 @@ module Auth
     end
 
     private
+
+    def set_frontend_url
+      @frontend_url = request.headers["X-Frontend-host"]
+    end
 
     def user_params
       params.require(:user).permit(

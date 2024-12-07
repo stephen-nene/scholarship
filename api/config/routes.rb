@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :auth do
     post "login", to: "sessions#login"
     post "register", to: "sessions#register"
+    post 'resend_activation', to: 'sessions#resend_activation'
     patch "activate/:token", to: "sessions#activate"
     post "forgot_password", to: "sessions#forgot_password"
     put "reset_password", to: "sessions#reset_password"

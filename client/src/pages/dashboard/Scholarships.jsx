@@ -6,24 +6,30 @@ import {
   MdInfo,
   MdOutlineDelete,
 } from "react-icons/md";
+import { fetchScholarships } from "../../helpers/admins.js";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Scholarships({ darkMode }) {
   const [scholarships, setScholarships] = useState([]);
   const [meta, setMeta] = useState({});
   const [selectedScholarship, setSelectedScholarship] = useState(null);
+  const paginatedScholarships = useSelector((e) => e.app.paginatedScholarships);
+  const dispatch = useDispatch();
   const statusStyles = {
     active: "bg-green-400 text-green-800",
     archived: "bg-yellow-400 text-yellow-900",
     deactivated: "bg-red-400 text-gray-800",
   };
-  const fetchScholarships = async (page = 1) => {
+  const getScholarships = async (page = 1) => {
+    if (paginatedScholarships[page]) {
+      setScholarships(paginatedScholarships[page].scholarships);
+      setMeta(paginatedScholarships[page].meta);
+      return paginatedScholarships[page];
+    }
     try {
-      const response = await fetch(
-        `http://127.0.0.1:3000/scholarships?page=${page}`
-      );
-      const data = await response.json();
-      setScholarships(data.scholarships);
-      setMeta(data.meta);
+      const response = await fetchScholarships(page, dispatch);
+      setScholarships(response?.scholarships);
+      setMeta(response?.meta);
     } catch (error) {
       console.error("Error fetching scholarships:", error);
       message.error("Failed to fetch scholarships.");
@@ -31,7 +37,7 @@ export default function Scholarships({ darkMode }) {
   };
 
   useEffect(() => {
-    fetchScholarships();
+    getScholarships();
   }, []);
 
   const showDetails = (scholarship) => {
@@ -44,10 +50,12 @@ export default function Scholarships({ darkMode }) {
 
   return (
     <div
-      className={`h-screen font-[sans-serif] overflow-x-auto ${
+      className={`min-h- screen font-[sans-serif] overflow-x-auto ${
         darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
       }`}
     >
+      <div className="min-h-screen">
+
       <table
         className={`min-w-full ${
           darkMode ? "bg-gray-800 text-gray-200" : "bg-white text-black"
@@ -92,24 +100,16 @@ export default function Scholarships({ darkMode }) {
                   {scholarship.status}
                 </span>
               </td>
-              <td className="p-4">
-                {scholarship.level}
-              </td>
-              <td className="text-xl p-4">
-                <button
-                  onClick={() => showDetails(scholarship)}
-                  className={`mr-4 ${
-                    darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
-                  }`}
-                  title="View Details"
-                >
-                  <MdInfo />
-                </button>
-                <button
-                  className={`mr-4 ${
-                    darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
-                  }`}
-                >
+              <td className="p-4">{scholarship.level}</td>
+              <td className=" text-xl ">
+                <div className="flex ">
+                  <MdInfo
+                    onClick={() => showDetails(scholarship)}
+                    className={`mr-4 cursor-pointer ${
+                      darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+                    }`}
+                    title="View"
+                  />
                   <MdOutlineDelete
                     onClick={() => message.error(`delete ${scholarship.title}`)}
                     className={`mr-4 ${
@@ -117,12 +117,13 @@ export default function Scholarships({ darkMode }) {
                     }`}
                     title="Delete"
                   />
-                </button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
 
       <div
         className={`md:flex m-4 ${
@@ -136,18 +137,18 @@ export default function Scholarships({ darkMode }) {
         <div className="flex items-center max-md:mt-4">
           <ul className="flex space-x-1 ml-2 text-xl">
             {/* Previous Page Button */}
-            {meta?.current_page !== 1 && (
-              <li
-                onClick={() => fetchScholarships(meta?.current_page - 1)}
-                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
-                  darkMode
-                    ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                    : "bg-blue-100 hover:bg-blue-200 text-blue-600"
-                }`}
-              >
-                <MdOutlineChevronLeft />
-              </li>
-            )}
+            <button
+              onClick={() => getScholarships(meta?.current_page - 1)}
+              className={`flex items-center justify-center w-7 h-7 rounded ${
+                darkMode
+                  ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
+                  : "bg-blue-100 hover:bg-blue-200 text-blue-600"
+              }`}
+              aria-label="Previous Page"
+              disabled={meta?.current_page === 1}
+            >
+              <MdOutlineChevronLeft />
+            </button>
 
             {/* Page Numbers */}
             {Array.from({ length: meta?.total_pages }).map((_, index) => {
@@ -155,10 +156,10 @@ export default function Scholarships({ darkMode }) {
               const isActive = pageNumber === meta?.current_page;
 
               return (
-                <li
-                  onClick={() => fetchScholarships(pageNumber)}
+                <button
+                  onClick={() => getScholarships(pageNumber)}
                   key={index}
-                  className={`flex items-center justify-center cursor-pointer text-sm w-7 h-7 rounded ${
+                  className={`flex items-center justify-center text-sm w-7 h-7 rounded ${
                     isActive
                       ? darkMode
                         ? "bg-gray-400 text-white"
@@ -167,25 +168,26 @@ export default function Scholarships({ darkMode }) {
                       ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
                       : "bg-gray-200 hover:bg-gray-400 text-gray-800"
                   }`}
+                  aria-label={`Page ${pageNumber}`}
                 >
                   {pageNumber}
-                </li>
+                </button>
               );
             })}
 
             {/* Next Page Button */}
-            {meta?.next_page && (
-              <li
-                onClick={() => fetchScholarships(meta?.current_page + 1)}
-                className={`flex items-center justify-center cursor-pointer w-7 h-7 rounded ${
-                  darkMode
-                    ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
-                    : "bg-blue-100 hover:bg-blue-300 text-blue-600"
-                }`}
-              >
-                <MdOutlineChevronRight />
-              </li>
-            )}
+            <button
+              onClick={() => getScholarships(meta?.current_page + 1)}
+              className={`flex items-center justify-center w-7 h-7 rounded ${
+                darkMode
+                  ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
+                  : "bg-blue-100 hover:bg-blue-300 text-blue-600"
+              }`}
+              aria-label="Next Page"
+              disabled={meta?.next_page === null}
+            >
+              <MdOutlineChevronRight />
+            </button>
           </ul>
         </div>
       </div>

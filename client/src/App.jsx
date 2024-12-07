@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Profiles } from "./pages/Profiles";
 import ProtectedRoute from "./pages/utils/ProtectedRoute";
+
 // Lazy load dashboard components
 const Meetings = lazy(() => import("./pages/dashboard/Meetings"));
 const Scholarships = lazy(() => import("./pages/dashboard/Scholarships"));
@@ -17,6 +18,7 @@ import { Login } from "./pages/auth/Login";
 import Forgot from "./pages/auth/Forgot";
 import Register from "./pages/auth/Register";
 import Activate from "./pages/auth/Activate";
+import Reset from "./pages/auth/Reset";
 
 import Error404 from "./pages/utils/Error404";
 import "./assets/styles/App.css";
@@ -85,15 +87,23 @@ function App() {
             </Route>
 
             <Route path="/login" element={<Login darkMode={darkMode} />} />
-            <Route
-              path="/forgot-password"
-              element={<Forgot darkMode={darkMode} />}
-            />
+            <Route path="/forgot" element={<Forgot darkMode={darkMode} />} />
             <Route
               path="/register"
               element={<Register darkMode={darkMode} />}
             />
-            <Route path="/activate/:token" element={<Activate />} />
+            <Route
+              path="/activate/:token"
+              element={
+                // <ProtectedRoute>
+                  <Activate />
+                // </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/reset/:token"
+              element={<Reset darkMode={darkMode} />}
+            />
 
             <Route path="*" element={<Error404 darkMode={darkMode} />} />
           </Routes>

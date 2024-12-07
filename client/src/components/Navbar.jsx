@@ -23,8 +23,8 @@ export const Navbar = () => {
   };
 
   return (
-    <div className={` ${darkMode ? "dark" : ""}`}>
-      <header className="navbar">
+    <div className={`${darkMode ? "dark " : ""}`}>
+      <header className="navbar  bg-sky-100 ">
         <nav className="container">
           <div className="navbar-wrapper ">
             {/* Logo */}

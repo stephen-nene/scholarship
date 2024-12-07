@@ -24,6 +24,19 @@ apiClient.interceptors.request.use((config) => {
   config.headers["X-Frontend-Host"] = window.location.origin;
   return config;
 });
+export async function resetPassword(data) {
+  try {
+    const response = await apiClient.put("/auth/reset_password", data);
+    showMessage("success", response.data.message);
+    // console.log(response.data)
+    return response.data;
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.error || "Failed to reset password. Try again.";
+    showMessage("error", errorMessage);
+    throw new Error(errorMessage);
+  }
+}
 
 export const getCurrentUser = async (dispatch, navigate) => {
 
@@ -63,7 +76,8 @@ export const serverLogin = async (values, navigate, dispatch) => {
     }
   } catch (error) {
     loadingMessage();
-    showMessage("error", error?.response?.data?.error, 3);
+    // showMessage("error", error?.response?.data?.error, 3);
+    throw error;
   } finally {
     loadingMessage();
   }
@@ -83,7 +97,7 @@ export const serverSignup = async (values, navigate,dispatch) => {
     }
   } catch (error) {
     loadingMessage();
-    console.error("Error response:", error.response);
+    console.error("Error response:", error);
     throw error;
   } finally {
     loadingMessage();
@@ -97,7 +111,7 @@ export const serverLogout = async (dispatch,navigate)=>{
       showMessage("success", response?.data?.message, 2);
       dispatch(logoutAction());
       navigate("/");
-      console.log("logout",response)
+      // console.log("logout",response)
       return response.data;
     } else {
       showMessage("error", "Logout Failed", 2);
@@ -105,5 +119,22 @@ export const serverLogout = async (dispatch,navigate)=>{
     }
   } catch (error) {
     showMessage("error", error?.response?.data?.error, 3);
+  }
+}
+
+export const serverForgotPass = async (email) => {
+  try {
+    const response = await apiClient.post("auth/forgot_password",{email}); 
+    if (response.status === 200) {
+      // console.log(response.data)
+      showMessage("success", response?.data?.message, 2);
+      return response.data;
+    } else {
+      showMessage("error", "Failed to send password reset email", 2);
+      throw new Error("Failed to send password reset email");
+    }
+  } catch (error) {
+    showMessage("error", error?.response?.data?.error, 3);
+    throw error;
   }
 }
