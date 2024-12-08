@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 
 const Pagination = ({ meta, onPageChange }) => {
   const darkMode = useSelector((state) => state.app.darkMode);
-
+// console.log(meta)
   return (
     <div
       className={`sm:flex items-center  m-4 ${
@@ -15,7 +15,7 @@ const Pagination = ({ meta, onPageChange }) => {
       }`}
     >
       <p className="text-sm flex-1">
-        Showing {meta.current_count || 0} of {meta.total_count || "?"} entries
+        Showing { meta.next_page? meta.per_page: meta.total_count-meta.offset_value } of {meta.total_count || "?"} entries
       </p>
 
       <div className="flex items-center max-md:mt-4">

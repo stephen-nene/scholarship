@@ -28,6 +28,7 @@ export default function Users({ darkMode }) {
       console.error("Failed to get users for page:", page);
     }
   };
+  console.log(meta)
 
   useEffect(() => {
     getUsers();
@@ -47,6 +48,7 @@ export default function Users({ darkMode }) {
     {
       key: "name",
       label: "Name",
+      // sortable: true,
       renderCell: (item) => (
         <div className="flex items-center cursor-pointer w-max">
           <img
@@ -68,6 +70,7 @@ export default function Users({ darkMode }) {
       label: "Role",
       type: "status",
       sortable: true,
+
     },
     {
       key: "status",

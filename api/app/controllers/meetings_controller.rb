@@ -3,7 +3,10 @@ class MeetingsController < ApplicationController
 
   # GET /meetings
   def index
-    @meetings = Meeting.all.page(params[:page])
+    sort_by = params[:sort_by] || 'meet_type'  # Default sort by created_at
+    sort_order = params[:sort_order] || 'asc'   # Default sort order is ascending
+  
+    @meetings = Meeting.all.order("#{sort_by} #{sort_order}").page(params[:page])
 
     render json: { 
       meetings: @meetings.map {|meeting| MeetingSerializer.new(meeting)},

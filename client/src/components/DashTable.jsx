@@ -1,5 +1,7 @@
 import React from "react";
-import { MdEdit, MdOutlineDelete, MdSort } from "react-icons/md";
+import { MdEdit, MdOutlineDelete } from "react-icons/md";
+import { BsSortDown,BsSortUp } from "react-icons/bs";
+
 import { useSelector } from "react-redux";
 
 const DashTable = ({ data, columns, onEdit, onDelete }) => {
@@ -40,21 +42,6 @@ const DashTable = ({ data, columns, onEdit, onDelete }) => {
         </span>
       );
     }
-
-    // Handling 'role' column type
-    if (column.role === "role") {
-      return (
-        <span
-          className={`py-1 px-2 rounded-full text-xs ${getBadgeColor(
-            item[column.key]
-          )}`}
-        >
-          {getRoleLabel(item[column.key])}
-        </span>
-      );
-    }
-
-    // Default rendering for other columns
     return item[column.key];
   };
 
@@ -75,7 +62,7 @@ const DashTable = ({ data, columns, onEdit, onDelete }) => {
               <th key={column.key} className="p-4">
                 <div className="flex items-center gap-x-1">
                   {column.label}
-                  {column.sortable && <MdSort />}
+                  {column.sortable && <BsSortDown />}
                 </div>
               </th>
             ))}

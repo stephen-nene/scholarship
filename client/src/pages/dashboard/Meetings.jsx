@@ -88,7 +88,7 @@ export default function Meetings({ darkMode }) {
     },
     {
       key: "meet_type",
-      label: "Meeting Type",
+      label: "Type",
       sortable: true,
       renderCell: (item) => item.meet_type.replace("_meeting", ""),
     },

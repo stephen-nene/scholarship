@@ -2,14 +2,20 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users
-def index
-  @users = User.all.page(params[:page])
-
-  render json: { 
-    users: @users.map {|user| UserSerializer.new(user)},
-    meta: pagination_meta(@users) 
-  }
-end
+  def index
+    # Default sorting parameters
+    sort_by = params[:sort_by] || 'created_at'  # Default sort by created_at
+    sort_order = params[:sort_order] || 'asc'   # Default sort order is ascending
+  
+    # Apply sorting to users query
+    @users = User.all.order("#{sort_by} #{sort_order}").page(params[:page])
+  
+    render json: {
+      users: @users.map { |user| UserSerializer.new(user) },
+      meta: pagination_meta(@users)
+    }
+  end
+  
 
 
   # GET /users/1
