@@ -13,6 +13,7 @@ const Meetings = lazy(() => import("./pages/dashboard/Meetings"));
 const Scholarships = lazy(() => import("./pages/dashboard/Scholarships"));
 const Users = lazy(() => import("./pages/dashboard/Users"));
 const HomeDash = lazy(() => import("./pages/dashboard/HomeDash"));
+const Meeting = lazy(() => import("./pages/dashboard/Items/Meeting"))
 
 import { Login } from "./pages/auth/Login";
 import Forgot from "./pages/auth/Forgot";
@@ -84,6 +85,8 @@ function App() {
               <Route path="users" element={<Users darkMode={darkMode} />} />
               <Route path="meetings" element={<Meetings darkMode={darkMode}/>} />
               <Route path="scholarships" element={<Scholarships />} />
+
+              <Route path="meeting/:id" element={<Meeting />} />
             </Route>
 
             <Route path="/login" element={<Login darkMode={darkMode} />} />

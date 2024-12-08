@@ -138,3 +138,5 @@ export const serverForgotPass = async (email) => {
     throw error;
   }
 }
+
+export default apiClient;

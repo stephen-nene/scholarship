@@ -5,6 +5,7 @@ import DashTable from "../../components/DashTable";
 import Pagination from "../../components/Pagination";
 import { message, Modal,FloatButton } from "antd"; // Add Modal import
 import { PlusOutlined } from "@ant-design/icons";
+import {Link} from 'react-router-dom'
 
 export default function Meetings({ darkMode }) {
   const [meetings, setMeetings] = useState([]);
@@ -58,12 +59,14 @@ export default function Meetings({ darkMode }) {
       label: "Title",
       sortable: true,
       renderCell: (item) => (
+        <Link  to={`/dash/meeting/${item.id}`} state={{meeting: item}}>
         <span
-          onClick={() => showDetails(item)} // Open modal on title click
+          // onClick={() => showDetails(item)} // Open modal on title click
           className="text-bl ue-600 cursor-pointer hover:underline"
         >
           {item.title}
         </span>
+        </Link>
       ),
     },
     {
@@ -127,6 +130,7 @@ export default function Meetings({ darkMode }) {
       >
         {selectedMeeting && (
           <div>
+            {console.log((selectedMeeting))}
             <p>
               <strong>Description:</strong> {selectedMeeting.description}
             </p>
