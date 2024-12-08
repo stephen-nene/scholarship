@@ -57,7 +57,11 @@ export async function fetchMeetings(page = 1, dispatch){
       }
     } catch (error) {
       console.error("Error fetching meetings:", error);
-      showMessage("error", "Failed to fetch meetings. Please try again.", 3);
+      if(error.message === "Network Error"){
+        showMessage('error',"server error try again later.",3);
+      }else{
+        showMessage("error", "Failed to fetch meetings. Please try again.", 3);
+      }
       throw error;
     } finally{
       loadingMessage();

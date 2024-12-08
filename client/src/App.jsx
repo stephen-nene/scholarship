@@ -82,7 +82,7 @@ function App() {
             >
               <Route path="" element={<HomeDash />} />
               <Route path="users" element={<Users darkMode={darkMode} />} />
-              <Route path="meetings" element={<Meetings />} />
+              <Route path="meetings" element={<Meetings darkMode={darkMode}/>} />
               <Route path="scholarships" element={<Scholarships />} />
             </Route>
 
