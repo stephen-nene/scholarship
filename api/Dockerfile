@@ -18,7 +18,7 @@ RUN apt-get update -qq && \
     libvips \
     sqlite3 \
     postgresql-client \
-    libpq-dev \ # <-- Add this line\
+    libpq-dev \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set environment variables for development
