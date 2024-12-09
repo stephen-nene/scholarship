@@ -33,8 +33,17 @@ RUN gem install bundler && bundle install
 # Copy application code
 COPY . .
 
+# Copy the custom entrypoint script
+COPY bin/docker-entrypoint /usr/bin/docker-entrypoint
+RUN chmod +x /usr/bin/docker-entrypoint
+
+# Set the custom entrypoint script
+ENTRYPOINT ["docker-entrypoint"]
+
 # Expose ports for development server
 EXPOSE 3000
 
 # Entrypoint prepares the database and boots the Rails server in dev mode
 CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+# CMD ["bin/rails", "db:prepare", "&&", "bin/rails", "server", "-b", "0.0.0.0"]
+
