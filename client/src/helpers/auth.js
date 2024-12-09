@@ -2,6 +2,10 @@ import axios from "axios";
 import { message } from "antd";
 import { loginAction, signupAction,logoutAction } from "../store/actions/userAction";
 
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+console.log(API_URL);
 function showMessage(type, content, duration) {
   return message[type]({
     content,
@@ -11,7 +15,7 @@ function showMessage(type, content, duration) {
 
 // Create an Axios instance with defaults
 const apiClient = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
   },

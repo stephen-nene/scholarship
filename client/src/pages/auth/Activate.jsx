@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../../helpers/auth";
 
 export default function Activate() {
   const { token } = useParams(); 
@@ -8,7 +8,6 @@ export default function Activate() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const url = "http://localhost:3000/";
   useEffect(() => {
     const activateAccount = async () => {
       try {
@@ -17,8 +16,8 @@ export default function Activate() {
           return;
         }
 
-        const response = await axios.patch(
-          `${url}/auth/activate/${token}`, 
+        const response = await apiClient.patch(
+          `/auth/activate/${token}`, 
           {}
         );
 

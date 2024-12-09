@@ -6,7 +6,7 @@ module Auth
     # POST /auth/register
     def register
       user = User.new(user_params)
-      puts "url from react", @frontend_url
+      # puts "url from react", @frontend_url
       if user.save
         user.generate_token(1.day.from_now)
         UserMailer.welcome_email(user, @frontend_url).deliver_now
