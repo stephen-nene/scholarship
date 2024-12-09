@@ -28,20 +28,20 @@
 # volumes:
 #   bundle:
 #   postgres_data:
-version: '3.9'
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/rails
-      - bundle:/usr/local/bundle
-    environment:
-      RAILS_ENV: development
-    stdin_open: true
-    tty: true
-volumes:
-  bundle:
+# version: '3.9'
+# services:
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "3000:3000"
+#     volumes:
+#       - .:/rails
+#       - bundle:/usr/local/bundle
+#     environment:
+#       RAILS_ENV: development
+#     stdin_open: true
+#     tty: true
+# volumes:
+#   bundle:
