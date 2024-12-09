@@ -93,10 +93,11 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  config.hosts = [
-    "onrender.com",   
-    /.*\.onrender\.com/ 
-  ]
+  # config.hosts = [
+  #   "onrender.com",   
+  #   /.*\.onrender\.com/ 
+  # ]
+  config.hosts << "scholarship-api-3eri.onrender.com"
 #   config.hosts += [
 #   "scholarship-api-3eri.onrender.com",
 #   "localhost",
