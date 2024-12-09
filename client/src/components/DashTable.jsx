@@ -11,18 +11,17 @@ const DashTable = ({ data, columns, onEdit, onDelete }) => {
     const badgeColors = {
       // fuchsia
       pending: "bg-orange-400 text-orange-950",
-      approved: "bg-green-400 text-green-800",
+      approved: "bg-green-400 text-green-950",
       completed: "bg-blue-400 text-blue-950",
-      cancelled: "bg-red-400 text-red-950",
-      active: "bg-green-400 text-green-950",
-      archived: "bg-gray-300 text-gray-800",
-      deactivated: "bg-rose-200 text-rose-800",
-      suspended: "bg-rose-400 text-rose-950",
-      default: "bg-gray-200 text-gray-800",
-      user: "bg-blue-200 text-blue-800",
+      active: "bg-green-500 text-green-950",
+      archived: "bg-yellow-500 text-yellow-950",
+      deactivated: "bg-rose-400 text-rose-950",
+      suspended: "bg-rose-500 text-rose-950",
+      cancelled: "bg-red-500 text-red-950",
+      user: "bg-blue-200 text-blue-950",
       provider: "bg-yellow-300 text-yellow-950",
       admin: "bg-cyan-400 text-cyan-950",
-      default: "bg-gray-200 text-gray-800",
+      default: "bg-gray-200 text-gray-950",
     };
 
     return badgeColors[status] || badgeColors["default"];

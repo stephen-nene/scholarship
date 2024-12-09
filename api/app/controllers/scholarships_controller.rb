@@ -71,6 +71,8 @@ class ScholarshipsController < ApplicationController
   # Pagination meta data
   def pagination_meta(scholarships)
     {
+      offset_value: scholarships.offset_value,
+      limit_value: scholarships.limit_value,
       total_count: scholarships.total_count,
       total_pages: scholarships.total_pages,
       next_page: scholarships.next_page,

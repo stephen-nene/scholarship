@@ -13,7 +13,7 @@ const Meetings = lazy(() => import("./pages/dashboard/Meetings"));
 const Scholarships = lazy(() => import("./pages/dashboard/Scholarships"));
 const Users = lazy(() => import("./pages/dashboard/Users"));
 const HomeDash = lazy(() => import("./pages/dashboard/HomeDash"));
-const Meeting = lazy(() => import("./pages/dashboard/Items/Meeting"))
+const Meeting = lazy(() => import("./pages/dashboard/Items/Meeting"));
 
 import { Login } from "./pages/auth/Login";
 import Forgot from "./pages/auth/Forgot";
@@ -58,7 +58,11 @@ function App() {
     <>
       <div className="flex flex-col gap- ">
         <Navbar darkMode={darkMode} />
-        <div className="bg-sky-900   min-h-screen  pt-[63px] md:mt-[5px]   ">
+        <div
+          className={`min-h-screen pt-[63px] md:mt-[5px] ${
+            darkMode ? "bg-black text-white" : "bg-gray-50"
+          }  `}
+        >
           {/* <div className=""> */}
           <Routes>
             <Route index element={<Home />} />
@@ -83,7 +87,10 @@ function App() {
             >
               <Route path="" element={<HomeDash />} />
               <Route path="users" element={<Users darkMode={darkMode} />} />
-              <Route path="meetings" element={<Meetings darkMode={darkMode}/>} />
+              <Route
+                path="meetings"
+                element={<Meetings darkMode={darkMode} />}
+              />
               <Route path="scholarships" element={<Scholarships />} />
 
               <Route path="meeting/:id" element={<Meeting />} />
@@ -99,7 +106,7 @@ function App() {
               path="/activate/:token"
               element={
                 // <ProtectedRoute>
-                  <Activate />
+                <Activate />
                 // </ProtectedRoute>
               }
             />

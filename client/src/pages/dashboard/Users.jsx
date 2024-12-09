@@ -28,7 +28,7 @@ export default function Users({ darkMode }) {
       console.error("Failed to get users for page:", page);
     }
   };
-  console.log(meta)
+  // console.log(meta)
 
   useEffect(() => {
     getUsers();
@@ -82,9 +82,7 @@ export default function Users({ darkMode }) {
 
   return (
     <div
-      className={`min-h-screen font-[sans-serif] overflow-x-auto ${
-        darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
-      }`}
+      className={`min-h-screen font-[sans-serif] overflow-x-auto `}
     >
       <DashTable
         data={users}

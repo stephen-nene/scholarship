@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { message, Modal } from "antd";
-import {
-  MdOutlineChevronLeft,
-  MdOutlineChevronRight,
-  MdInfo,
-  MdOutlineDelete,
-} from "react-icons/md";
+import { MdInfo, MdOutlineDelete } from "react-icons/md";
 import { fetchScholarships } from "../../helpers/admins.js";
 import { useSelector, useDispatch } from "react-redux";
+import Pagination from "../../components/Pagination.jsx";
+import DashTable from "../../components/DashTable.jsx";
 
 export default function Scholarships({ darkMode }) {
   const [scholarships, setScholarships] = useState([]);
@@ -47,16 +44,42 @@ export default function Scholarships({ darkMode }) {
   const closeDetails = () => {
     setSelectedScholarship(null);
   };
+  const handleDelete = (scholarship) => {
+    message.error(`Delete ${scholarship.title}`);
+    // Implement actual delete logic here
+  };
+
+  const columns = [
+    {
+      key: "title",
+      label: "Title",
+    },
+    {
+      key: "funding_amount",
+      label: "Funding Amount",
+      renderCell: (item) => `$ ${item.funding_amount.toLocaleString()}`,
+    },
+    {
+      key: "deadline",
+      label: "Deadline",
+      renderCell: (item) => new Date(item.deadline).toLocaleDateString(),
+    },
+    {
+      key: "status",
+      label: "Status",
+      type: "status",
+    },
+    {
+      key: "level",
+      label: "Level",
+    },
+  ];
 
   return (
     <div
-      className={`min-h- screen font-[sans-serif] overflow-x-auto ${
-        darkMode ? "bg-gray-900 text-white" : "bg-white text-black"
-      }`}
+      className={`min-h-screen font-[sans-serif] overflow-x-auto `}
     >
-      <div className="min-h-screen">
-
-      <table
+      {/* <table
         className={`min-w-full ${
           darkMode ? "bg-gray-800 text-gray-200" : "bg-white text-black"
         }`}
@@ -111,7 +134,9 @@ export default function Scholarships({ darkMode }) {
                     title="View"
                   />
                   <MdOutlineDelete
-                    onClick={() => message.error(`delete ${scholarship.title}`)}
+                    onClick={() =>
+                      message.error(`delete ${scholarship.title}`)
+                    }
                     className={`mr-4 ${
                       darkMode ? "hover:text-red-400" : "hover:text-red-600"
                     }`}
@@ -122,75 +147,16 @@ export default function Scholarships({ darkMode }) {
             </tr>
           ))}
         </tbody>
-      </table>
-      </div>
+      </table> */}
+      <DashTable
+        data={scholarships}
+        columns={columns}
+        onEdit={showDetails}
+        onDelete={handleDelete}
+        />
 
-      <div
-        className={`md:flex m-4 ${
-          darkMode ? " text-gray-200" : " text-gray-900"
-        }`}
-      >
-        <p className="text-sm flex-1">
-          Showing {scholarships.length} of {meta.total_count || "?"} entries
-        </p>
+      <Pagination meta={meta} onPageChange={getScholarships} />
 
-        <div className="flex items-center max-md:mt-4">
-          <ul className="flex space-x-1 ml-2 text-xl">
-            {/* Previous Page Button */}
-            <button
-              onClick={() => getScholarships(meta?.current_page - 1)}
-              className={`flex items-center justify-center w-7 h-7 rounded ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                  : "bg-blue-100 hover:bg-blue-200 text-blue-600"
-              }`}
-              aria-label="Previous Page"
-              disabled={meta?.current_page === 1}
-            >
-              <MdOutlineChevronLeft />
-            </button>
-
-            {/* Page Numbers */}
-            {Array.from({ length: meta?.total_pages }).map((_, index) => {
-              const pageNumber = index + 1;
-              const isActive = pageNumber === meta?.current_page;
-
-              return (
-                <button
-                  onClick={() => getScholarships(pageNumber)}
-                  key={index}
-                  className={`flex items-center justify-center text-sm w-7 h-7 rounded ${
-                    isActive
-                      ? darkMode
-                        ? "bg-gray-400 text-white"
-                        : "bg-blue-500 text-white"
-                      : darkMode
-                      ? "bg-gray-700 hover:bg-gray-600 text-gray-300"
-                      : "bg-gray-200 hover:bg-gray-400 text-gray-800"
-                  }`}
-                  aria-label={`Page ${pageNumber}`}
-                >
-                  {pageNumber}
-                </button>
-              );
-            })}
-
-            {/* Next Page Button */}
-            <button
-              onClick={() => getScholarships(meta?.current_page + 1)}
-              className={`flex items-center justify-center w-7 h-7 rounded ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-700 text-gray-300"
-                  : "bg-blue-100 hover:bg-blue-300 text-blue-600"
-              }`}
-              aria-label="Next Page"
-              disabled={meta?.next_page === null}
-            >
-              <MdOutlineChevronRight />
-            </button>
-          </ul>
-        </div>
-      </div>
       {/* Modal for Detailed View */}
       <Modal
         title={selectedScholarship?.title}

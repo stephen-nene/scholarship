@@ -86,17 +86,6 @@ export default function MeetingDetails() {
             ))}
           </ul>
         );
-        case 'participants':
-          return (
-            <ul className="list-disc pl-4">
-              {value?.map((participant, index) => (
-                <li key={index}>
-                  {participant.username} ({participant.email})
-                </li>
-              ))}
-            </ul>
-          );
-  
         case 'scholarship':
         case 'admin':
           return (
