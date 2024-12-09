@@ -38,7 +38,7 @@ COPY bin/docker-entrypoint /usr/bin/docker-entrypoint
 RUN chmod +x /usr/bin/docker-entrypoint
 
 # Set the custom entrypoint script
-ENTRYPOINT ["docker-entrypoint"]
+ENTRYPOINT ["/usr/bin/docker-entrypoint"]
 
 # Expose ports for development server
 EXPOSE 3000

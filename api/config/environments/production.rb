@@ -97,12 +97,13 @@ Rails.application.configure do
   #   "onrender.com",   
   #   /.*\.onrender\.com/ 
   # ]
-  config.hosts << "scholarship-api-3eri.onrender.com"
+  # config.hosts << "scholarship-api-3eri.onrender.com"
 #   config.hosts += [
 #   "scholarship-api-3eri.onrender.com",
 #   "localhost",
 #   "127.0.0.1"
 # ]
+config.hosts.clear
 
   #
   # Skip DNS rebinding protection for the default health check endpoint.
