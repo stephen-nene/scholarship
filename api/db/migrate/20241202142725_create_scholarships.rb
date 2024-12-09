@@ -11,7 +11,9 @@ class CreateScholarships < ActiveRecord::Migration[8.0]
       t.string :application_link
       t.string :country
       t.integer :level
-      t.integer :major
+      t.json :major
+      t.integer :funding_type
+      t.json :target_audience
 
       t.timestamps
     end

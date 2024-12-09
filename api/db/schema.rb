@@ -48,7 +48,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_083144) do
     t.string "application_link"
     t.string "country"
     t.integer "level"
-    t.integer "major"
+    t.json "major"
+    t.integer "funding_type"
+    t.json "target_audience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["country"], name: "index_scholarships_on_country"

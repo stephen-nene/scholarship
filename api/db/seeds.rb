@@ -53,25 +53,29 @@ puts "✨ Seeding scholarships... 🎓"
 
 30.times do
   Scholarship.create!(
-    title: Faker::Educator.course_name,
+    title: Faker::Quote.most_interesting_man_in_the_world,
     description: {
       summary: Faker::GreekPhilosophers.quote,
       details: Array.new(rand(3..4)) {
         [Faker::Quote.matz,
-         Faker::Quote.unique.most_interesting_man_in_the_world,
+         Faker::Quote.unique.singular_siegler,
          Faker::Quote.jack_handey].sample
       },
       requirements: Faker::Hacker.say_something_smart,
-      degree_name: Faker::Educator.degree,
+      courses_touched: Array.new(rand(1..4)) { 
+        [Faker::Educator.unique.degree, Faker::Educator.unique.course].sample 
+      }, 
+      universities: Array.new(rand(1..5)) { Faker::Educator.unique.university } # Random selection of 1 to 5 universities affected
     },
     eligibility_criteria: {
       age_range: "#{rand(18..30)}-#{rand(31..40)} years old",
-      country_specific: Faker::Address.country,
+      eligible_countries: Array.new(rand(5..10)) { Faker::Address.unique.country },
       academic_requirements: Faker::ChuckNorris.fact,
       other_requirements: Array.new(rand(3..4)) { Faker::Quote.famous_last_words },
       additional_info: Faker::Books::Dune.quote,
       application_requirements: Faker::Books::Dune.saying,
-    },
+      
+  },
     funding_amount: Faker::Number.decimal(l_digits: 6, r_digits: 2),
     deadline: Faker::Date.forward(days: 30),
     status: Scholarship.statuses.keys.sample,
@@ -79,10 +83,13 @@ puts "✨ Seeding scholarships... 🎓"
     application_link: Faker::Internet.url,
     country: Faker::Address.country,
     level: Scholarship.levels.keys.sample,
-    major: Scholarship.majors.keys.sample,
+    funding_type: Scholarship.funding_types.keys.sample, \
+    target_audience: ScholarshipConstants::TARGET_AUDIENCES.values.sample(rand(1..3)),
+    major: ScholarshipConstants::MAJORS.values.sample(rand(3..5)),
   )
 
   Faker::Quote.unique.clear
+  Faker::Educator.unique.clear
 end
 
 puts "🎉 Seeding complete! #{Scholarship.count} scholarships have been added."
