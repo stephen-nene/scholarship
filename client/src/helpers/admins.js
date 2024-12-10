@@ -1,4 +1,4 @@
-import axios from "axios";
+import apiClient from "./apiClient.js";
 import { message } from "antd";
 import { setUserPageData,setMeetingsPageData,setScholarshipPageData } from "../store/actions/appAction.js";
 
@@ -8,19 +8,6 @@ function showMessage(type, content, duration) {
     duration,
   });
 }
-
-const apiClient = axios.create({
-  baseURL: "http://localhost:3000/",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  withCredentials: true,
-});
-
-apiClient.interceptors.request.use((config) => {
-  config.headers["X-Frontend-Host"] = window.location.origin;
-  return config;
-});
 
 export async function fetchUsers(page = 1, dispatch) {
   const loadingMessage = showMessage("loading", "fetching users", 0);

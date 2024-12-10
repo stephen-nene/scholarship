@@ -5,21 +5,21 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
-
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  allow do
-    origins "http://localhost:5173"
-    resource "*", 
-    headers: :any, 
-    methods: [:get, :post, :put, :patch, :delete, :options, :head], 
+  shared_options = {
+    resource: "*",
+    headers: :any,
+    methods: [:get, :post, :put, :patch, :delete, :options, :head],
     credentials: true
-  end
+  }
+
+  allowed_origins = [
+    "http://localhost:5173",
+    "https://scholarship-06st.onrender.com",
+  ]
 
   allow do
-    origins "https://timebox-nine.vercel.app/"
-    resource "*", 
-    headers: :any, 
-    methods: [:get, :post, :put, :patch, :delete, :options, :head], 
-    credentials: true
+    origins(*allowed_origins)
+    shared_options.each { |key, value| send(key, value) }
   end
 end

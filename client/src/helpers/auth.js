@@ -1,11 +1,8 @@
-import axios from "axios";
+import apiClient from "./apiClient";
 import { message } from "antd";
 import { loginAction, signupAction,logoutAction } from "../store/actions/userAction";
 
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-console.log(API_URL);
 function showMessage(type, content, duration) {
   return message[type]({
     content,
@@ -13,21 +10,6 @@ function showMessage(type, content, duration) {
   });
 }
 
-// Create an Axios instance with defaults
-const apiClient = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  withCredentials: true, 
-
-});
-
-// Add a request interceptor to include custom headers dynamically
-apiClient.interceptors.request.use((config) => {
-  config.headers["X-Frontend-Host"] = window.location.origin;
-  return config;
-});
 export async function resetPassword(data) {
   try {
     const response = await apiClient.put("/auth/reset_password", data);
