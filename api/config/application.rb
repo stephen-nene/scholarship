@@ -34,7 +34,7 @@ module Scholarships
     # in config/environments, which are processed later.
     # Add middleware for cookies and session management
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: "auth-session", same_site: :lax, secure: false
+    config.middleware.use ActionDispatch::Session::CookieStore, key: "auth-session", same_site: :none, secure: true
 
     config.action_dispatch.cookies_same_site_protection = :None
 
