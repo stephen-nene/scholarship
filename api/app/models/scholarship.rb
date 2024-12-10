@@ -83,14 +83,16 @@ module ScholarshipConstants
 end
 
 class Scholarship < ApplicationRecord
+
   enum :status, ScholarshipConstants::STATUSES, prefix: true
   enum :level, ScholarshipConstants::LEVELS, prefix: true
   enum :funding_type, ScholarshipConstants::FUNDING_TYPES, prefix: true
+  # serialize :majors, JSON
 
   # Scopes for Advanced Querying
-  scope :current, -> { where(status: :active).where("deadline >= ?", Date.current) }
-  scope :by_country, ->(country) { where("country ILIKE ?", "%#{country}%") }
-  scope :by_funding_range, ->(min, max) { where(funding_amount: min..max) }
+  # scope :current, -> { where(status: :active).where("deadline >= ?", Date.current) }
+  # scope :by_country, ->(country) { where("country ILIKE ?", "%#{country}%") }
+  # scope :by_funding_range, ->(min, max) { where(funding_amount: min..max) }
 
   validates :description, :eligibility_criteria, :deadline, :country, :major, presence: true
   validates :title,

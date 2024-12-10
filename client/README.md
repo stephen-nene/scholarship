@@ -9,7 +9,6 @@ Here are some more free templates and resources for creating ready-made Tailwind
 - [Tailwind Components](https://tailwindcomponents.com/)
 - [Flowbite](https://flowbite.com/)
 - [Meraki UI](https://merakiui.com/)
-- [Tailwind Toolbox](https://www.tailwindtoolbox.com/)
 - [Tailwind UI](https://tailwindui.com/) (Note: Paid with some free components)
 - [Treact](https://treact.owaiskhan.me/)
 - [Kitwind](https://kitwind.io/)

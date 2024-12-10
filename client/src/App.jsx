@@ -6,6 +6,7 @@ import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Home } from "./pages/Home";
 import { Profiles } from "./pages/Profiles";
+import HomeScholarships from "./pages/Scholarships";
 import ProtectedRoute from "./pages/utils/ProtectedRoute";
 
 // Lazy load dashboard components
@@ -37,35 +38,18 @@ function App() {
     }
   }, []);
 
-  const user = {
-    first_name: "Judson",
-    last_name: "Macejkovic",
-    middle_name: "Nene",
-    username: "marhta",
-    phonenumber: "768.761.0038",
-    email: "stevekid705@gmail.com",
-    password: "assword",
-    addresses: {
-      street: "3565 Allyson Street",
-      city: "South Adrianburgh",
-      state: "Maryland",
-      country: "Portugal",
-    },
-    profile_pic: "https://tinyurl.com/ytdspj2e",
-  };
-
   return (
     <>
       <div className="flex flex-col gap- ">
         <Navbar darkMode={darkMode} />
         <div
-          className={`min-h-screen pt-[63px] md:mt-[5px] ${
+          className={`min-h-screen pt-55  ] md:pt-[7px] sm: ${
             darkMode ? "bg-black text-white" : "bg-gray-50"
           }  `}
         >
           {/* <div className=""> */}
           <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Home darkMode={darkMode} />} />
             <Route
               path="/profile"
               element={
@@ -74,7 +58,11 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/scholarships"
+              element={<HomeScholarships/>}/>
 
+            {/* dashboard routes  */}
             <Route
               path="dash"
               element={
@@ -95,25 +83,12 @@ function App() {
 
               <Route path="meeting/:id" element={<Meeting />} />
             </Route>
-
-            <Route path="/login" element={<Login darkMode={darkMode} />} />
+            {/* authentication routes  */}
+            <Route path="/login" element={<Login />} />
             <Route path="/forgot" element={<Forgot darkMode={darkMode} />} />
-            <Route
-              path="/register"
-              element={<Register darkMode={darkMode} />}
-            />
-            <Route
-              path="/activate/:token"
-              element={
-                // <ProtectedRoute>
-                <Activate />
-                // </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/reset/:token"
-              element={<Reset darkMode={darkMode} />}
-            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/activate/:token" element={<Activate />} />
+            <Route path="/reset/:token" element={<Reset />} />
 
             <Route path="*" element={<Error404 darkMode={darkMode} />} />
           </Routes>

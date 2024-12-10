@@ -14,8 +14,19 @@ module Filterable
           # Handle different data types or specific filter logic
           case column_name
           when Array
-            # For columns like JSON arrays or enums, use IN queries
-            collection = collection.where("#{column_name[0]} @> ARRAY[?]::integer[]", value) if value.is_a?(Array)
+            # For numeric major filtering in SQLite
+            if value.is_a?(String)
+              # Convert string to integer
+              major_id = value.to_i
+              collection = collection.where("major LIKE ?", "%#{major_id}%")
+            elsif value.is_a?(Array)
+              # Convert array values to integers and create OR conditions
+              major_ids = value.map(&:to_i)
+              collection = collection.where(
+                major_ids.map { "major LIKE ?" }.join(" OR "),
+                *major_ids.map { |id| "%#{id}%" }
+              )
+            end
           when Hash
             # Advanced filtering for JSON fields
             collection = collection.where("#{column_name[:json_field]} ->> '#{column_name[:key]}' = ?", value)

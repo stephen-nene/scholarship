@@ -83,7 +83,7 @@ puts "✨ Seeding scholarships... 🎓"
     application_link: Faker::Internet.url,
     country: Faker::Address.country,
     level: Scholarship.levels.keys.sample,
-    funding_type: Scholarship.funding_types.keys.sample, \
+    funding_type: Scholarship.funding_types.keys.sample, 
     target_audience: ScholarshipConstants::TARGET_AUDIENCES.values.sample(rand(1..3)),
     major: ScholarshipConstants::MAJORS.values.sample(rand(3..5)),
   )

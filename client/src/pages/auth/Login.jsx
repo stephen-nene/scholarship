@@ -12,13 +12,14 @@ import { Link } from "react-router-dom";
 import { serverLogin } from "../../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-export const Login = ({ darkMode = false }) => {
+export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user.userData);
+  const darkMode = useSelector((state) =>state.app.darkMode)
 
   const onFinish = async (values) => {
     setLoading(true);

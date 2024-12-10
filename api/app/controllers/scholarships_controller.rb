@@ -11,10 +11,12 @@ class ScholarshipsController < ApplicationController
       major: [:major],
       funding_type: :funding_type,
       country: :country,
-      min_funding: "funding_amount >= ?", # Custom filter logic for range
+      min_funding: "funding_amount >= ?", 
       max_funding: "funding_amount <= ?",
-      deadline: "deadline >= ?", # For future deadlines
+      deadline: "deadline >= ?", 
     }
+    puts "Major filter params: #{params[:major]}"  # Debug print
+
     @scholarships = apply_filters(Scholarship.all, allowed_filters).page(params[:page])
     if @scholarships.empty?
       render json: { errors: "No scholarships found with the provided filters." }, status: :not_found

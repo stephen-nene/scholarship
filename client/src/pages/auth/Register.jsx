@@ -11,12 +11,13 @@ import {
 } from "antd";
 import { Link,useNavigate } from "react-router-dom";
 import { serverSignup } from "../../helpers/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 
-export const Register = ({ darkMode = false }) => {
+export const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const darkMode = useSelector((state) =>state.app.darkMode)
   
   const onFinish = async (values) => {
     setLoading(true);

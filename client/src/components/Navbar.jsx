@@ -29,7 +29,7 @@ export const Navbar = () => {
           <div className="navbar-wrapper ">
             {/* Logo */}
             <NavLink className="text-2xl font-bold" to="/">
-              Logo
+               EduGrantHub
             </NavLink>
 
             <div className="d">
@@ -39,15 +39,15 @@ export const Navbar = () => {
                   <NavLink to="/" className="nav-link">
                     Home
                   </NavLink>
-                  <NavLink to="/services" className="nav-link">
+                  <NavLink to="/scholarships" className="nav-link">
                     Scholarships
-                  </NavLink>
-                  <NavLink to="/about" className="nav-link">
-                    About
                   </NavLink>
                   <Link to="/login" className="nav-link">
                     FAQs
                   </Link>
+                  <NavLink to="/blogs" className="nav-link">
+                    Blogs
+                  </NavLink>
                   {!userData && (
                     <Link to="/login" className="btn btn-login">
                       Login

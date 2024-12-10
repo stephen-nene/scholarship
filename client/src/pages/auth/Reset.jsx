@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Button, Form, Input, Typography, Alert } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
 import { resetPassword } from "../../helpers/auth.js"
+import { useSelector } from "react-redux";
 
-export default function Reset({ darkMode = false }) {
+export default function Reset() {
   const { token } = useParams(); // Get token from the URL params
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
   const [error, setError] = useState("");
+
+  const darkMode = useSelector((state) =>state.app.darkMode)
 
   const onFinish = async (values) => {
     const { password, confirmPassword } = values;
