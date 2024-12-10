@@ -1,10 +1,13 @@
 #!/bin/bash
 
-bundle install
-# bundle update
-# bundle exec rails assets:precompile
-# bundle exec rails assets:clean
+# Run database migration
+echo "Running db:migrate..."
 bundle exec rails db:migrate
 
-#if you have seeds to run add:
+# Run seed if needed
+echo "Running db:seed..."
 bundle exec rails db:seed
+
+# Start Rails server
+echo "Starting Rails server..."
+bundle exec rails server -b '0.0.0.0'
