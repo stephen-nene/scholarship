@@ -94,17 +94,17 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "onrender.com",   
-  #   /.*\.onrender\.com/ 
-  # ]
+  config.hosts = [
+    "onrender.com",   
+    /.*\.onrender\.com/ 
+  ]
   # config.hosts << "scholarship-api-3eri.onrender.com"
 #   config.hosts += [
 #   "scholarship-api-3eri.onrender.com",
 #   "localhost",
 #   "127.0.0.1"
 # ]
-config.hosts.clear
+# config.hosts.clear
 
   #
   # Skip DNS rebinding protection for the default health check endpoint.
