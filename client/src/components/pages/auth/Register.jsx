@@ -10,7 +10,7 @@ import {
   Select,
 } from "antd";
 import { Link,useNavigate } from "react-router-dom";
-import { serverSignup } from "../../helpers/auth";
+import { serverSignup } from "../../../helpers/auth";
 import { useDispatch,useSelector } from "react-redux";
 
 export const Register = () => {

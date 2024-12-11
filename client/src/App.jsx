@@ -4,25 +4,25 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Home } from "./pages/Home";
-import { Profiles } from "./pages/Profiles";
-import HomeScholarships from "./pages/Scholarships";
-import ProtectedRoute from "./pages/utils/ProtectedRoute";
+import { Home } from "./components/pages/Home";
+import { Profiles } from "./components/pages/Profiles";
+import HomeScholarships from "./components/pages/Scholarships";
+import ProtectedRoute from "./components/utils/ProtectedRoute";
 
 // Lazy load dashboard components
-const Meetings = lazy(() => import("./pages/dashboard/Meetings"));
-const Scholarships = lazy(() => import("./pages/dashboard/Scholarships"));
-const Users = lazy(() => import("./pages/dashboard/Users"));
-const HomeDash = lazy(() => import("./pages/dashboard/HomeDash"));
-const Meeting = lazy(() => import("./pages/dashboard/Items/Meeting"));
+const Meetings = lazy(() => import("./components/pages/dashboard/Meetings"));
+const Scholarships = lazy(() => import("./components/pages/dashboard/Scholarships"));
+const Users = lazy(() => import("./components/pages/dashboard/Users"));
+const HomeDash = lazy(() => import("./components/pages/dashboard/HomeDash"));
+const Meeting = lazy(() => import("./components/pages/dashboard/Items/Meeting"));
 
-import { Login } from "./pages/auth/Login";
-import Forgot from "./pages/auth/Forgot";
-import Register from "./pages/auth/Register";
-import Activate from "./pages/auth/Activate";
-import Reset from "./pages/auth/Reset";
+import { Login } from "./components/pages/auth/Login";
+import Forgot from "./components/pages/auth/Forgot";
+import Register from "./components/pages/auth/Register";
+import Activate from "./components/pages/auth/Activate";
+import Reset from "./components/pages/auth/Reset";
 
-import Error404 from "./pages/utils/Error404";
+import Error404 from "./components/utils/Error404";
 import "./assets/styles/App.css";
 
 import { getCurrentUser } from "./helpers/auth";

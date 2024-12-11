@@ -9,7 +9,7 @@ import {
   message,
 } from "antd";
 import { Link } from "react-router-dom";
-import { serverLogin } from "../../helpers/auth";
+import { serverLogin } from "../../../helpers/auth";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 export const Login = () => {

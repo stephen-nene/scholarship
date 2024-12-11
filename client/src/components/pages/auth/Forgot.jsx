@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, Alert } from "antd";
 import { Link } from "react-router-dom";
-import { serverForgotPass } from "../../helpers/auth";
+import { serverForgotPass } from "../../../helpers/auth";
 
 export const Forgot = ({ darkMode = false }) => {
   const [loading, setLoading] = useState(false);

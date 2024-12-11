@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, Alert } from "antd";
 import { useParams, useNavigate } from "react-router-dom";
-import { resetPassword } from "../../helpers/auth.js"
+import { resetPassword } from "../../../helpers/auth.js"
 import { useSelector } from "react-redux";
 
 export default function Reset() {

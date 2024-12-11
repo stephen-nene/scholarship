@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import apiClient from "../../helpers/auth";
+import apiClient from "../../../helpers/auth";
 
 export default function Activate() {
   const { token } = useParams(); 
