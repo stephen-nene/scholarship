@@ -8,6 +8,9 @@ import { Home } from "./components/pages/Home";
 import { Profiles } from "./components/pages/Profiles";
 import HomeScholarships from "./components/pages/Scholarships";
 import ProtectedRoute from "./components/utils/ProtectedRoute";
+import Faqs from "./components/pages/Faqs2";
+
+const BookMeeting = lazy(()=>import('./components/pages/BookMeeting'))
 
 // Lazy load dashboard components
 const Meetings = lazy(() => import("./components/pages/dashboard/Meetings"));
@@ -43,8 +46,8 @@ function App() {
       <div className="flex flex-col gap- ">
         <Navbar darkMode={darkMode} />
         <div
-          className={`min-h-screen pt-55  ] md:pt-[7px] sm: ${
-            darkMode ? "bg-black text-white" : "bg-gray-50"
+          className={`min-h-screen pt-[55px]   md:pt-[70px] sm: ${
+            darkMode ? "bg-black text-white" : "bg-gray-10"
           }  `}
         >
           {/* <div className=""> */}
@@ -58,6 +61,12 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/faqs"
+              element={<Faqs/>}/>
+              <Route
+              path="/book-meeting"
+              element={<BookMeeting/>}/>
             <Route
               path="/scholarships"
               element={<HomeScholarships/>}/>

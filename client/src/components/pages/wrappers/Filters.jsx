@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { message, Select, Input, Button, Space } from "antd";
 import apiClient from "../../../helpers/apiClient";
+import bgimg from '../../../assets/images/bgimg.png';
 
 
 export default function Filters({darkMode}) {
@@ -62,7 +63,11 @@ export default function Filters({darkMode}) {
         }
       };
   return (
-    <div className="filters bg-gray-100 dark:b g-gray-800 p-6 rounded-xl shadow-md">
+    <div  
+     style={{
+         backgroundImage: `url(${bgimg})`
+       }}
+       className="filters bg-black bg-opacity-50 p-6 rounded-xl shadow-md">
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {/* Level Selection */}
       <Select

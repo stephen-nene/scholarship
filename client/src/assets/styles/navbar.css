@@ -47,21 +47,21 @@
 }
 
 .btn-login {
-  background-color: #48bb78;
+  background-color: #EAB308;
   color: white;
   transition: background-color 0.3s ease-in-out;
 }
 
 .btn-login:hover {
-  background-color: #38a169;
+  background-color: #A16207;
 }
 
 .dark  .navbar .btn-login {
-  background-color: #2f855a;
+  background-color: #EAB308;
 }
 
 .dark  .navbar .btn-login:hover {
-  background-color: #276749;
+  background-color: #A16207;
 }
 
 /* Mobile Menu Styles */

@@ -1,167 +1,85 @@
+import { message } from "antd";
 import React from "react";
 
 export default function Blogs() {
+  const blogPosts = [
+    {
+      title: "Top Scholarships for 2024",
+      description:
+        "Discover the best scholarships available for students in 2024. Apply now and secure your future!",
+      image: "https://readymadeui.com/images/food.webp",
+      date: "12 December 2024",
+      link: "#",
+    },
+    {
+      title: "How to Apply for Scholarships",
+      description:
+        "Step-by-step guide on how to apply for various scholarships, with tips and advice.",
+      image: "https://readymadeui.com/images/food11.webp",
+      date: "10 December 2024",
+      link: "#",
+    },
+    {
+      title: "Scholarships for International Students",
+      description:
+        "Find out about scholarships specifically for international students looking to study abroad.",
+      image: "https://readymadeui.com/images/food22.webp",
+      date: "08 December 2024",
+      link: "#",
+    },
+    {
+      title: "Scholarships for Women in STEM",
+      description:
+        "Explore scholarships designed to encourage women to pursue careers in science, technology, engineering, and math.",
+      image: "https://readymadeui.com/images/food33.webp",
+      date: "05 December 2024",
+      link: "#",
+    },
+  ];
+
   return (
     <>
-      {/* <div class="bg-gray-100 md:px-10 px-4 py-12 font-[sans-serif]"> */}
-      <div class="md:px-4 px-2 py-12 max-w-5xl max-lg:max-w-3xl max-sm:max-w-sm mx-auto">
-        <h2 class="text-3xl font-extrabold mb-8">
-          Latest Blog Posts
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/cardImg.webp"
-              alt="Blog Post 1"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Lorem Ipsum Dolor
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="javascript:void(0);"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
-              >
-                Read More
-              </a>
-            </div>
+      <div className="p-4 font-[sans-serif]">
+        <div className="max-w-6xl max-lg:max-w-6xl max-sm:max-w-sm mx-auto">
+          <div className="max-w-md mx-auto">
+            <h2 className="text-3xl font-extrabold text-gray-800 mb-12  leading-10">
+              Latest blogs
+            </h2>
           </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/hotel-img.webp"
-              alt="Blog Post 2"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Consectetur Adipiscing
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="javascript:void(0);"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-sm:gap-8">
+            {blogPosts.map((post, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-t-xl overflow-hidden"
               >
-                Read More
-              </a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/team-image.webp"
-              alt="Blog Post 3"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Lorem Ipsum Sit Amet
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="javascript:void(0);"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
-              >
-                Read More
-              </a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/prediction.webp"
-              alt="Blog Post 3"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Lorem Ipsum Sit Amet
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="javascript:void(0);"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
-              >
-                Read More
-              </a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/hacks-watch.webp"
-              alt="Blog Post 3"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Lorem Ipsum Sit Amet
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="javascript:void(0);"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
-              >
-                Read More
-              </a>
-            </div>
-          </div>
-          <div class="bg-white rounded overflow-hidden">
-            <img
-              src="https://readymadeui.com/Imagination.webp"
-              alt="Blog Post 3"
-              class="w-full h-52 object-cover"
-            />
-            <div class="p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-3">
-                Lorem Ipsum Sit Amet
-              </h3>
-              <p class="text-gray-500 text-sm">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore...
-              </p>
-              <p class="text-orange-500 text-[13px] font-semibold mt-4">
-                08 April 2024
-              </p>
-              <a
-                href="/"
-                class="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-orange-500 hover:bg-orange-600 text-white text-[13px]"
-              >
-                Read More
-              </a>
-            </div>
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-52 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm">{post.description}</p>
+                  <p className="text-gray-800 text-[13px] font-semibold mt-4">
+                    {post.date}
+                  </p>
+                  <button onClick={()=>message.success(`will view blog ${post.title}`,0.9)} className="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-yellow-500 hover:bg-yellow-700 text-white text-[13px]">
+                    Read More
+                  </button>
+                  {/* <a
+                    href={post.link}
+                    className="mt-4 inline-block px-4 py-2 rounded tracking-wider bg-purple-600 hover:bg-purple-700 text-white text-[13px]"
+                  >
+                    Read More
+                  </a> */}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }

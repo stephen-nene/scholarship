@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchMeetings } from "../../helpers/admins";
-import DashTable from "../../components/DashTable";
-import Pagination from "../../components/Pagination";
+import { fetchMeetings } from "../../../helpers/admins";
+import DashTable from "../../../components/DashTable";
+import Pagination from "../../../components/Pagination";
 import { message, Modal, FloatButton } from "antd"; // Add Modal import
 import { PlusOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";

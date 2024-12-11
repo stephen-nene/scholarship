@@ -1,9 +1,9 @@
 import { message, FloatButton } from "antd";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../helpers/admins";
-import DashTable from "../../components/DashTable";
-import Pagination from "../../components/Pagination";
+import { fetchUsers } from "../../../helpers/admins";
+import DashTable from "../../../components/DashTable";
+import Pagination from "../../../components/Pagination";
 import { PlusOutlined } from "@ant-design/icons";
 
 export default function Users({ darkMode }) {

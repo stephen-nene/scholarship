@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Filters from "./wrappers/Filters";
 import Blogs from "./wrappers/Blogs";
 import Features from "./wrappers/Features";
+import Newsletter from "./wrappers/Newsletter";
+import bgimg from "../../assets/images/bgimg.png";
 
 export const Home = ({ darkMode }) => {
   return (
@@ -15,6 +17,7 @@ export const Home = ({ darkMode }) => {
         <div className="text-center p-5 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6">
             Discover International{" "}
+
             <span className="text-yellow-500">Scholarships</span> for Your
             Future
           </h2>
@@ -46,11 +49,10 @@ export const Home = ({ darkMode }) => {
               </p>
             </div>
           </div>
-
         </div>
         <Features darkMode={darkMode} />
-      <Blogs />
-
+        <Blogs />
+        <Newsletter />
       </div>
     </>
   );

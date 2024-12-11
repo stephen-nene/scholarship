@@ -4,6 +4,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { FaBars, FaMoon, FaSun, FaUser } from "react-icons/fa";
 import { VscChromeClose } from "react-icons/vsc";
+import { FcGraduationCap } from "react-icons/fc";
+
 
 import { setDarkMode } from "../store/actions/appAction";
 import "../assets/styles/navbar.css";
@@ -28,8 +30,8 @@ export const Navbar = () => {
         <nav className="container">
           <div className="navbar-wrapper ">
             {/* Logo */}
-            <NavLink className="text-2xl font-bold" to="/">
-               EduGrantHub
+            <NavLink className="flex items-center gap-3 text-2xl font-bold" to="/">
+             <FcGraduationCap size={40}/>  EduGrantHub
             </NavLink>
 
             <div className="d">
@@ -42,7 +44,7 @@ export const Navbar = () => {
                   <NavLink to="/scholarships" className="nav-link">
                     Scholarships
                   </NavLink>
-                  <Link to="/login" className="nav-link">
+                  <Link to="/faqs" className="nav-link">
                     FAQs
                   </Link>
                   <NavLink to="/blogs" className="nav-link">
@@ -181,7 +183,7 @@ export const Navbar = () => {
                 <NavLink onClick={toggleMenu} to="/about" className="nav-link">
                   About
                 </NavLink>
-                <Link onClick={toggleMenu} to="/login" className="nav-link">
+                <Link onClick={toggleMenu} to="/faqs" className="nav-link">
                   FAQs
                 </Link>
                 {!userData && (

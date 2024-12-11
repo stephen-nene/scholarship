@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { message, Modal } from "antd";
 import { MdInfo, MdOutlineDelete } from "react-icons/md";
-import { fetchScholarships } from "../../helpers/admins.js";
+import { fetchScholarships } from "../../../helpers/admins.js";
 import { useSelector, useDispatch } from "react-redux";
-import Pagination from "../../components/Pagination.jsx";
-import DashTable from "../../components/DashTable.jsx";
+import Pagination from "../../../components/Pagination.jsx";
+import DashTable from "../../../components/DashTable.jsx";
 
 export default function Scholarships({ darkMode }) {
   const [scholarships, setScholarships] = useState([]);
@@ -12,11 +12,13 @@ export default function Scholarships({ darkMode }) {
   const [selectedScholarship, setSelectedScholarship] = useState(null);
   const paginatedScholarships = useSelector((e) => e.app.paginatedScholarships);
   const dispatch = useDispatch();
+
   const statusStyles = {
     active: "bg-green-400 text-green-800",
     archived: "bg-yellow-400 text-yellow-900",
     deactivated: "bg-red-400 text-gray-800",
   };
+
   const getScholarships = async (page = 1) => {
     if (paginatedScholarships[page]) {
       setScholarships(paginatedScholarships[page].scholarships);
@@ -53,31 +55,38 @@ export default function Scholarships({ darkMode }) {
     {
       key: "title",
       label: "Title",
+      sortable: true,
+      renderCell: (item) => item.title.length > 30 ? item.title.substring(0, 30) + "..." : item.title,
+
     },
     {
       key: "funding_amount",
-      label: "Funding Amount",
+      label: "Amount",
+      sortable: true,
       renderCell: (item) => `$ ${item.funding_amount.toLocaleString()}`,
     },
     {
       key: "deadline",
       label: "Deadline",
+      sortable: true,
       renderCell: (item) => new Date(item.deadline).toLocaleDateString(),
     },
     {
       key: "status",
       label: "Status",
       type: "status",
+      sortable: true,
     },
     {
       key: "level",
       label: "Level",
+      sortable: true,
     },
   ];
 
   return (
     <div
-      className={`min-h-screen font-[sans-serif] overflow-x-auto `}
+      className={`min-h- screen font-[sans-serif] overflow-x-auto `}
     >
       {/* <table
         className={`min-w-full ${

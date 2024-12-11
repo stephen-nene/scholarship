@@ -17,7 +17,7 @@ export default function Footer() {
                             !darkMode ? "text-gray-800" : "text-white"
                         } md:mx-3 xl:text-2xl`}
                     >
-                        Subscribe to our newsletter to get updates.
+                        Create an account with to get our latest Features.
                     </h1>
 
                     <div className="mt-6 md:mx-3 shrink-0 md:mt-0 md:w-auto">
